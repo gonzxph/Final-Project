@@ -1,0 +1,463 @@
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'addstaffPyUKfb.ui'
+##
+## Created by: Qt User Interface Compiler version 5.14.1
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
+import sys
+from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
+    QRect, QSize, QUrl, Qt)
+from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
+    QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
+    QRadialGradient)
+from PyQt5.QtWidgets import *
+import psycopg2
+
+
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        if Dialog.objectName():
+            Dialog.setObjectName(u"Dialog")
+        Dialog.resize(618, 616)
+        self.gridLayout = QGridLayout(Dialog)
+        self.gridLayout.setSpacing(0)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.widget = QWidget(Dialog)
+        self.widget.setObjectName(u"widget")
+        self.widget.setStyleSheet(u"background-color: rgb(236, 230, 230);")
+        self.gridLayout_3 = QGridLayout(self.widget)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.widget_4 = QWidget(self.widget)
+        self.widget_4.setObjectName(u"widget_4")
+        self.horizontalLayout = QHBoxLayout(self.widget_4)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.widget_7 = QWidget(self.widget_4)
+        self.widget_7.setObjectName(u"widget_7")
+        font = QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.widget_7.setFont(font)
+        self.gridLayout_2 = QGridLayout(self.widget_7)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.label = QLabel(self.widget_7)
+        self.label.setObjectName(u"label")
+        font1 = QFont()
+        font1.setPointSize(12)
+        font1.setBold(True)
+        font1.setWeight(75)
+        self.label.setFont(font1)
+        self.label.setStyleSheet(u"color: #B10303;")
+
+        self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
+
+
+        self.horizontalLayout.addWidget(self.widget_7)
+
+        self.widget_8 = QWidget(self.widget_4)
+        self.widget_8.setObjectName(u"widget_8")
+
+        self.horizontalLayout.addWidget(self.widget_8)
+
+
+        self.gridLayout_3.addWidget(self.widget_4, 0, 0, 1, 1)
+
+        self.widget_2 = QWidget(self.widget)
+        self.widget_2.setObjectName(u"widget_2")
+        self.verticalLayout = QVBoxLayout(self.widget_2)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.widget_3 = QWidget(self.widget_2)
+        self.widget_3.setObjectName(u"widget_3")
+        self.widget_3.setMinimumSize(QSize(582, 67))
+        self.widget_3.setMaximumSize(QSize(582, 67))
+        self.horizontalLayout_2 = QHBoxLayout(self.widget_3)
+        self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.widget_13 = QWidget(self.widget_3)
+        self.widget_13.setObjectName(u"widget_13")
+        self.verticalLayout_3 = QVBoxLayout(self.widget_13)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.fnamelabel = QLabel(self.widget_13)
+        self.fnamelabel.setObjectName(u"fnamelabel")
+        self.fnamelabel.setFont(font)
+        self.fnamelabel.setStyleSheet(u"color: #B10303;")
+
+        self.verticalLayout_3.addWidget(self.fnamelabel)
+
+        self.fnameinput = QLineEdit(self.widget_13)
+        self.fnameinput.setObjectName(u"fnameinput")
+        self.fnameinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"border: 1px solid  #B10303;\n"
+"border-radius: 5px;\n"
+"padding: 4px;\n"
+"")
+
+        self.verticalLayout_3.addWidget(self.fnameinput)
+
+
+        self.horizontalLayout_2.addWidget(self.widget_13)
+
+        self.widget_14 = QWidget(self.widget_3)
+        self.widget_14.setObjectName(u"widget_14")
+        self.verticalLayout_2 = QVBoxLayout(self.widget_14)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.lnamelabel = QLabel(self.widget_14)
+        self.lnamelabel.setObjectName(u"lnamelabel")
+        self.lnamelabel.setFont(font)
+        self.lnamelabel.setStyleSheet(u"color: #B10303;")
+
+        self.verticalLayout_2.addWidget(self.lnamelabel)
+
+        self.lnameinput = QLineEdit(self.widget_14)
+        self.lnameinput.setObjectName(u"lnameinput")
+        self.lnameinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"border: 1px solid  #B10303;\n"
+"border-radius: 5px;\n"
+"padding: 4px;")
+
+        self.verticalLayout_2.addWidget(self.lnameinput)
+
+
+        self.horizontalLayout_2.addWidget(self.widget_14)
+
+
+        self.verticalLayout.addWidget(self.widget_3)
+
+        self.widget_5 = QWidget(self.widget_2)
+        self.widget_5.setObjectName(u"widget_5")
+        self.horizontalLayout_3 = QHBoxLayout(self.widget_5)
+        self.horizontalLayout_3.setSpacing(0)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.widget_12 = QWidget(self.widget_5)
+        self.widget_12.setObjectName(u"widget_12")
+        self.verticalLayout_4 = QVBoxLayout(self.widget_12)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.phonelabel = QLabel(self.widget_12)
+        self.phonelabel.setObjectName(u"phonelabel")
+        self.phonelabel.setFont(font)
+        self.phonelabel.setStyleSheet(u"color: #B10303;")
+
+        self.verticalLayout_4.addWidget(self.phonelabel)
+
+        self.phoneinput = QLineEdit(self.widget_12)
+        self.phoneinput.setObjectName(u"phoneinput")
+        self.phoneinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"border: 1px solid  #B10303;\n"
+"border-radius: 5px;\n"
+"padding: 4px;\n"
+"")
+
+        self.verticalLayout_4.addWidget(self.phoneinput)
+
+
+        self.horizontalLayout_3.addWidget(self.widget_12)
+
+        self.widget_15 = QWidget(self.widget_5)
+        self.widget_15.setObjectName(u"widget_15")
+        self.verticalLayout_5 = QVBoxLayout(self.widget_15)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.emaillabel = QLabel(self.widget_15)
+        self.emaillabel.setObjectName(u"emaillabel")
+        self.emaillabel.setFont(font)
+        self.emaillabel.setStyleSheet(u"color: #B10303;")
+
+        self.verticalLayout_5.addWidget(self.emaillabel)
+
+        self.emailinput = QLineEdit(self.widget_15)
+        self.emailinput.setObjectName(u"emailinput")
+        self.emailinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"border: 1px solid  #B10303;\n"
+"border-radius: 5px;\n"
+"padding: 4px;\n"
+"")
+
+        self.verticalLayout_5.addWidget(self.emailinput)
+
+
+        self.horizontalLayout_3.addWidget(self.widget_15)
+
+
+        self.verticalLayout.addWidget(self.widget_5)
+
+        self.widget_6 = QWidget(self.widget_2)
+        self.widget_6.setObjectName(u"widget_6")
+        self.horizontalLayout_4 = QHBoxLayout(self.widget_6)
+        self.horizontalLayout_4.setSpacing(0)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.widget_16 = QWidget(self.widget_6)
+        self.widget_16.setObjectName(u"widget_16")
+        self.verticalLayout_7 = QVBoxLayout(self.widget_16)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.addresslabel = QLabel(self.widget_16)
+        self.addresslabel.setObjectName(u"addresslabel")
+        self.addresslabel.setFont(font)
+        self.addresslabel.setStyleSheet(u"color: #B10303;")
+
+        self.verticalLayout_7.addWidget(self.addresslabel)
+
+        self.addressinput = QLineEdit(self.widget_16)
+        self.addressinput.setObjectName(u"addressinput")
+        self.addressinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"border: 1px solid  #B10303;\n"
+"border-radius: 5px;\n"
+"padding: 4px;\n"
+"")
+
+        self.verticalLayout_7.addWidget(self.addressinput)
+
+
+        self.horizontalLayout_4.addWidget(self.widget_16)
+
+        self.widget_17 = QWidget(self.widget_6)
+        self.widget_17.setObjectName(u"widget_17")
+        self.verticalLayout_6 = QVBoxLayout(self.widget_17)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.pinlabel_2 = QLabel(self.widget_17)
+        self.pinlabel_2.setObjectName(u"pinlabel_2")
+        self.pinlabel_2.setFont(font)
+        self.pinlabel_2.setStyleSheet(u"color: #B10303;")
+
+        self.verticalLayout_6.addWidget(self.pinlabel_2)
+
+        self.pinlabel = QLineEdit(self.widget_17)
+        self.pinlabel.setObjectName(u"pininput")
+        self.pinlabel.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"border: 1px solid  #B10303;\n"
+"border-radius: 5px;\n"
+"padding: 4px;\n"
+"")
+
+        self.verticalLayout_6.addWidget(self.pinlabel)
+
+
+        self.horizontalLayout_4.addWidget(self.widget_17)
+
+        self.horizontalLayout_4.setStretch(0, 5)
+        self.horizontalLayout_4.setStretch(1, 5)
+
+        self.verticalLayout.addWidget(self.widget_6)
+
+        self.widget_9 = QWidget(self.widget_2)
+        self.widget_9.setObjectName(u"widget_9")
+        self.horizontalLayout_5 = QHBoxLayout(self.widget_9)
+        self.horizontalLayout_5.setSpacing(0)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.widget_18 = QWidget(self.widget_9)
+        self.widget_18.setObjectName(u"widget_18")
+        self.verticalLayout_8 = QVBoxLayout(self.widget_18)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.hdlabel = QLabel(self.widget_18)
+        self.hdlabel.setObjectName(u"hdlabel")
+        self.hdlabel.setFont(font)
+        self.hdlabel.setStyleSheet(u"color: #B10303;")
+
+        self.verticalLayout_8.addWidget(self.hdlabel)
+
+        self.dhinput = QDateEdit(self.widget_18)
+        self.dhinput.setObjectName(u"dhinput")
+        self.dhinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"border: 1px solid  #B10303;\n"
+"border-radius: 5px;\n"
+"padding: 4px;")
+
+        self.verticalLayout_8.addWidget(self.dhinput)
+
+
+        self.horizontalLayout_5.addWidget(self.widget_18)
+
+        self.widget_19 = QWidget(self.widget_9)
+        self.widget_19.setObjectName(u"widget_19")
+        self.verticalLayout_9 = QVBoxLayout(self.widget_19)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.deptlabel = QLabel(self.widget_19)
+        self.deptlabel.setObjectName(u"deptlabel")
+        self.deptlabel.setFont(font)
+        self.deptlabel.setStyleSheet(u"color: #B10303;")
+
+        self.verticalLayout_9.addWidget(self.deptlabel)
+
+        self.deptinput = QComboBox(self.widget_19)
+        self.deptinput.setObjectName(u"deptinput")
+        self.deptinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+"border: 1px solid  #B10303;\n"
+"border-radius: 5px;\n"
+"padding: 4px;")
+
+        self.verticalLayout_9.addWidget(self.deptinput)
+
+
+        self.horizontalLayout_5.addWidget(self.widget_19)
+
+
+        self.verticalLayout.addWidget(self.widget_9)
+
+        self.widget_10 = QWidget(self.widget_2)
+        self.widget_10.setObjectName(u"widget_10")
+
+        self.verticalLayout.addWidget(self.widget_10)
+
+        self.widget_11 = QWidget(self.widget_2)
+        self.widget_11.setObjectName(u"widget_11")
+        self.horizontalLayout_6 = QHBoxLayout(self.widget_11)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.widget_20 = QWidget(self.widget_11)
+        self.widget_20.setObjectName(u"widget_20")
+        self.gridLayout_4 = QGridLayout(self.widget_20)
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.cancelbtn = QPushButton(self.widget_20)
+        self.cancelbtn.setObjectName(u"cancelbtn")
+        self.cancelbtn.setStyleSheet(u"background-color: rgb(236, 230, 230);\n"
+"color: #B10303;\n"
+"border: 1px solid #B10303;\n"
+"border-radius: 4px;\n"
+"padding: 7px;")
+
+        self.gridLayout_4.addWidget(self.cancelbtn, 0, 1, 1, 1)
+
+        self.widget_22 = QWidget(self.widget_20)
+        self.widget_22.setObjectName(u"widget_22")
+
+        self.gridLayout_4.addWidget(self.widget_22, 0, 0, 1, 1)
+
+        self.widget_23 = QWidget(self.widget_20)
+        self.widget_23.setObjectName(u"widget_23")
+
+        self.gridLayout_4.addWidget(self.widget_23, 0, 2, 1, 1)
+
+
+        self.horizontalLayout_6.addWidget(self.widget_20)
+
+        self.widget_21 = QWidget(self.widget_11)
+        self.widget_21.setObjectName(u"widget_21")
+        self.gridLayout_5 = QGridLayout(self.widget_21)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.widget_24 = QWidget(self.widget_21)
+        self.widget_24.setObjectName(u"widget_24")
+
+        self.gridLayout_5.addWidget(self.widget_24, 0, 0, 1, 1)
+
+        self.addbtn = QPushButton(self.widget_21)
+        self.addbtn.setObjectName(u"addbtn")
+        self.addbtn.setStyleSheet(u"background-color: #B10303;\n"
+"color: white;\n"
+"border: 1px solid #B10303;\n"
+"border-radius: 4px;\n"
+"padding: 7px;")
+
+        self.gridLayout_5.addWidget(self.addbtn, 0, 1, 1, 1)
+
+        self.widget_25 = QWidget(self.widget_21)
+        self.widget_25.setObjectName(u"widget_25")
+
+        self.gridLayout_5.addWidget(self.widget_25, 0, 2, 1, 1)
+
+
+        self.horizontalLayout_6.addWidget(self.widget_21)
+
+
+        self.verticalLayout.addWidget(self.widget_11)
+
+
+        self.gridLayout_3.addWidget(self.widget_2, 1, 0, 1, 1)
+
+        self.gridLayout_3.setRowStretch(0, 1)
+        self.gridLayout_3.setRowStretch(1, 8)
+
+        self.gridLayout.addWidget(self.widget, 0, 0, 1, 1)
+
+        self.gridLayout.setColumnStretch(0, 1)
+
+        self.retranslateUi(Dialog)
+        
+        self.addbtn.clicked.connect(self.add_employee)
+
+        QMetaObject.connectSlotsByName(Dialog)
+        
+        self.populateComboBox()
+        
+    # setupUi
+
+    def retranslateUi(self, Dialog):
+        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
+        self.label.setText(QCoreApplication.translate("Dialog", u"Add Staff", None))
+        self.fnamelabel.setText(QCoreApplication.translate("Dialog", u"Firstname", None))
+        self.lnamelabel.setText(QCoreApplication.translate("Dialog", u"Lastname", None))
+        self.phonelabel.setText(QCoreApplication.translate("Dialog", u"Phone", None))
+        self.emaillabel.setText(QCoreApplication.translate("Dialog", u"Email", None))
+        self.addresslabel.setText(QCoreApplication.translate("Dialog", u"Address", None))
+        self.pinlabel_2.setText(QCoreApplication.translate("Dialog", u"PIN", None))
+        self.hdlabel.setText(QCoreApplication.translate("Dialog", u"Hire date", None))
+        self.deptlabel.setText(QCoreApplication.translate("Dialog", u"Department", None))
+        self.cancelbtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
+        self.addbtn.setText(QCoreApplication.translate("Dialog", u"Add", None))
+    # retranslateUi
+    
+    def add_employee(self):
+        # Collect data from the input fields
+        fname = self.fnameinput.text()
+        lname = self.lnameinput.text()
+        phone = self.phoneinput.text()
+        email = self.emailinput.text()
+        hire_date = self.dhinput.date().toString("yyyy-MM-dd")
+        department_id = self.deptinput.currentData()
+        address = self.addressinput.text()
+        pin = self.pininput.text()
+
+        # Connect to the PostgreSQL database
+        try:
+            conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
+            cursor = conn.cursor()
+            
+            # Insert data into the employees table
+            insert_query = """
+                INSERT INTO employees (first_name, last_name, phone, email, department_id, hire_date, address, emp_pin)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(insert_query, (fname, lname, phone, email, department_id, hire_date, address, pin))
+            conn.commit()
+
+            cursor.close()
+            conn.close()
+
+            # Show a message box with success
+            QMessageBox.information(None, "Success", "Employee added successfully!")
+
+        except Exception as e:
+            QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")
+    
+    
+    def populateComboBox(self):
+        try:
+            # Connect to the PostgreSQL database
+            connection = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
+            cursor = connection.cursor()
+
+            # Execute the query to fetch department names and ids
+            cursor.execute("SELECT department_id, name FROM departments")
+            departments = cursor.fetchall()
+
+            # Add department names to the comboBox and store the id as user data
+            for dept_id, dept_name in departments:
+                self.deptinput.addItem(dept_name, dept_id)
+
+            # Close the database connection
+            cursor.close()
+            connection.close()
+        except psycopg2.Error as error:
+            print(f"Error while connecting to database: {error}")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    Dialog = QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())

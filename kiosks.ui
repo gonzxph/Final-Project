@@ -54,14 +54,45 @@
        <item>
         <widget class="QWidget" name="widget_5" native="true">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(85, 255, 127);</string>
+          <string notr="true">background-color: rgb(40, 38, 38);</string>
          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QWidget" name="widget_9" native="true">
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
+              <widget class="QPushButton" name="pushButton">
+               <property name="styleSheet">
+                <string notr="true">border: none;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>image/Logo1.png</normaloff>image/Logo1.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>100</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="widget_8" native="true"/>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
         <widget class="QWidget" name="widget_6" native="true">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 170, 0);</string>
+          <string notr="true">background-color: rgb(40, 38, 38);</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
@@ -72,6 +103,9 @@
               <weight>75</weight>
               <bold>true</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: red;</string>
             </property>
             <property name="text">
              <string>INSURGENTS</string>
@@ -90,6 +124,9 @@
               <bold>true</bold>
              </font>
             </property>
+            <property name="styleSheet">
+             <string notr="true">color: red;</string>
+            </property>
             <property name="text">
              <string>KIOSKS</string>
             </property>
@@ -104,7 +141,7 @@
        <item>
         <widget class="QWidget" name="widget_7" native="true">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(170, 170, 255);</string>
+          <string notr="true">background-color: rgb(40, 38, 38);</string>
          </property>
         </widget>
        </item>
