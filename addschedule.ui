@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1438</width>
+    <height>791</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>301</width>
+     <height>791</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(40, 38, 38);</string>
+   </property>
+   <widget class="QWidget" name="widgetImg" native="true">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>10</y>
+      <width>211</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="img">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>10</y>
+       <width>181</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 1px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>image/Logo.png</normaloff>image/Logo.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>200</width>
+       <height>200</height>
+      </size>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="widget_2" native="true">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>0</y>
+     <width>1141</width>
+     <height>801</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>1141</width>
+     <height>801</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1141</width>
+     <height>801</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(199, 194, 194);</string>
+   </property>
+   <widget class="QWidget" name="widget_3" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1141</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(40, 38, 38);</string>
+    </property>
+    <widget class="QPushButton" name="btnaddsched">
+     <property name="geometry">
+      <rect>
+       <x>910</x>
+       <y>40</y>
+       <width>201</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+	background-color: #282626;
+	color: white;
+	border-radius: 5px;
+	border: 1px solid white;
+
+}
+
+QPushButton:hover{
+	background-color: #B10303
+}</string>
+     </property>
+     <property name="text">
+      <string>   Add Schedule</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>icon/Add properties.png</normaloff>icon/Add properties.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btneditsched">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>40</y>
+       <width>201</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+	background-color: #282626;
+	color: white;
+	border-radius: 5px;
+	border: 1px solid white;
+
+}
+
+QPushButton:hover{
+	background-color: #B10303
+}</string>
+     </property>
+     <property name="text">
+      <string>  Edit Schedule</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>icon/Edit Property.png</normaloff>icon/Edit Property.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="widget_4" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>100</y>
+      <width>1131</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QWidget" name="widget_5" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(210, 66, 66);</string>
+       </property>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>10 AM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QWidget" name="widget_6" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(204, 124, 124);</string>
+       </property>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>11 AM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QWidget" name="widget_7" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(210, 66, 66);</string>
+       </property>
+       <widget class="QLabel" name="label_3">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>12 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QWidget" name="widget_8" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(204, 124, 124);</string>
+       </property>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>1 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QWidget" name="widget_9" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(210, 66, 66);
+</string>
+       </property>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>2 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QWidget" name="widget_10" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(204, 124, 124);</string>
+       </property>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>3 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <widget class="QWidget" name="widget_11" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(210, 66, 66);</string>
+       </property>
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>4 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="7">
+      <widget class="QWidget" name="widget_12" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(204, 124, 124);</string>
+       </property>
+       <widget class="QLabel" name="label_8">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>5 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="8">
+      <widget class="QWidget" name="widget_13" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(210, 66, 66);</string>
+       </property>
+       <widget class="QLabel" name="label_9">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>6 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="9">
+      <widget class="QWidget" name="widget_14" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(204, 124, 124);</string>
+       </property>
+       <widget class="QLabel" name="label_10">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>7 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="10">
+      <widget class="QWidget" name="widget_15" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(210, 66, 66);</string>
+       </property>
+       <widget class="QLabel" name="label_11">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>8 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="11">
+      <widget class="QWidget" name="widget_16" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(204, 124, 124);</string>
+       </property>
+       <widget class="QLabel" name="label_12">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>9 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="0" column="12">
+      <widget class="QWidget" name="widget_17" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(210, 66, 66);</string>
+       </property>
+       <widget class="QLabel" name="label_13">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>41</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>10 PM</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
