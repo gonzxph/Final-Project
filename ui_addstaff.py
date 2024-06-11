@@ -8,6 +8,7 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
+from msilib import Dialog
 import sys
 from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt)
@@ -23,6 +24,7 @@ class Ui_Dialog(object):
         if Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
         Dialog.resize(618, 616)
+        self.dialog = Dialog
         self.gridLayout = QGridLayout(Dialog)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
@@ -72,8 +74,6 @@ class Ui_Dialog(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.widget_3 = QWidget(self.widget_2)
         self.widget_3.setObjectName(u"widget_3")
-        self.widget_3.setMinimumSize(QSize(582, 67))
-        self.widget_3.setMaximumSize(QSize(582, 67))
         self.horizontalLayout_2 = QHBoxLayout(self.widget_3)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -226,15 +226,15 @@ class Ui_Dialog(object):
 
         self.verticalLayout_6.addWidget(self.pinlabel_2)
 
-        self.pinlabel = QLineEdit(self.widget_17)
-        self.pinlabel.setObjectName(u"pininput")
-        self.pinlabel.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+        self.pininput = QLineEdit(self.widget_17)
+        self.pininput.setObjectName(u"pininput")
+        self.pininput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"
 "padding: 4px;\n"
 "")
 
-        self.verticalLayout_6.addWidget(self.pinlabel)
+        self.verticalLayout_6.addWidget(self.pininput)
 
 
         self.horizontalLayout_4.addWidget(self.widget_17)
@@ -378,6 +378,7 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         
         self.addbtn.clicked.connect(self.add_employee)
+        self.cancelbtn.clicked.connect(Dialog.close)
 
         QMetaObject.connectSlotsByName(Dialog)
         
@@ -399,6 +400,8 @@ class Ui_Dialog(object):
         self.cancelbtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
         self.addbtn.setText(QCoreApplication.translate("Dialog", u"Add", None))
     # retranslateUi
+
+    
     
     def add_employee(self):
         # Collect data from the input fields
@@ -429,6 +432,8 @@ class Ui_Dialog(object):
 
             # Show a message box with success
             QMessageBox.information(None, "Success", "Employee added successfully!")
+            
+            self.add_staff_dialog.close()
 
         except Exception as e:
             QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")
@@ -453,11 +458,3 @@ class Ui_Dialog(object):
             connection.close()
         except psycopg2.Error as error:
             print(f"Error while connecting to database: {error}")
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    Dialog = QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
-    sys.exit(app.exec_())

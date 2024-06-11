@@ -17,6 +17,7 @@ from PyQt5.QtWidgets import *
 import psycopg2  # Import psycopg2 for PostgreSQL operations
 import datetime
 from PyQt5.uic import loadUi
+from ui_addstaff import Ui_Dialog
 
 
 class Ui_MainWindow(object):
@@ -236,7 +237,8 @@ class Ui_MainWindow(object):
     def open_add_staff_dialog(self):
         # Create an instance of the add staff dialog
         self.add_staff_dialog = QDialog()
-        self.add_staff_dialog_ui = loadUi("addstaff.ui", self.add_staff_dialog)
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self.add_staff_dialog)
 
         # Connect any signals or slots as needed
 

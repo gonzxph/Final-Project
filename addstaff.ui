@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>618</width>
-    <height>616</height>
+    <width>529</width>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -80,14 +80,14 @@
           <widget class="QWidget" name="widget_3" native="true">
            <property name="minimumSize">
             <size>
-             <width>582</width>
-             <height>67</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>582</width>
-             <height>67</height>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -316,7 +316,7 @@ padding: 4px;
              <widget class="QWidget" name="widget_17" native="true">
               <layout class="QVBoxLayout" name="verticalLayout_6">
                <item>
-                <widget class="QLabel" name="pinlabel_2">
+                <widget class="QLabel" name="pininput">
                  <property name="font">
                   <font>
                    <weight>75</weight>
