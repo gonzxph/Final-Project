@@ -65,6 +65,23 @@
        <item>
         <widget class="QWidget" name="widget_4" native="true">
          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="1" column="0">
+           <widget class="QPushButton" name="schedbtn">
+            <property name="styleSheet">
+             <string notr="true">#schedbtn{
+background-color: #B10303;
+border: 1px solid white;
+border-radius: 5px;
+margin: 0 40px;
+padding: 7px;
+color: white;
+}</string>
+            </property>
+            <property name="text">
+             <string>Schedule</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QPushButton" name="staffbtn">
             <property name="styleSheet">
@@ -74,36 +91,15 @@ border-radius: 5px;
 margin: 0 40px;
 padding: 7px;
 color: white;
-background-color: #B10303;
 }
 
 #staffbtn:hover{
-	color: black;
-}</string>
-            </property>
-            <property name="text">
-             <string>Staff</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QPushButton" name="schedbtn">
-            <property name="styleSheet">
-             <string notr="true">#schedbtn{
-border: 1px solid white;
-border-radius: 5px;
-margin: 0 40px;
-padding: 7px;
-color: white;
-}
-
-#schedbtn:hover{
 	background-color: #B10303;
 	color: black;
 }</string>
             </property>
             <property name="text">
-             <string>Schedule</string>
+             <string>Staff</string>
             </property>
            </widget>
           </item>
@@ -189,71 +185,17 @@ color: white;
          <property name="styleSheet">
           <string notr="true">background-color: rgb(236, 230, 230);</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="6,1,1,1">
+         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="9,1">
           <item>
            <widget class="QWidget" name="widget_10" native="true"/>
-          </item>
-          <item>
-           <widget class="QWidget" name="widget_14" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <item>
-              <widget class="QPushButton" name="deletestaffbtn">
-               <property name="styleSheet">
-                <string notr="true">#deletestaffbtn{
-border: 1px solid white;
-border-radius: 5px;
-margin: 0 5px;
-padding: 7px;
-background-color: #B10303;
-color: white;
-}
-
-#deletestaffbtn:hover{
-	color: black;
-}</string>
-               </property>
-               <property name="text">
-                <string>Delete</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="widget_15" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <item>
-              <widget class="QPushButton" name="updatestaffbtn">
-               <property name="styleSheet">
-                <string notr="true">#updatestaffbtn{
-border: 1px solid white;
-border-radius: 5px;
-margin: 0 5px;
-padding: 7px;
-background-color: #B10303;
-color: white;
-}
-
-#updatestaffbtn:hover{
-	color: black;
-}</string>
-               </property>
-               <property name="text">
-                <string>Update</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
           </item>
           <item>
            <widget class="QWidget" name="widget_11" native="true">
             <layout class="QGridLayout" name="gridLayout_4">
              <item row="0" column="0">
-              <widget class="QPushButton" name="addstaffbtn">
+              <widget class="QPushButton" name="addschedbtn">
                <property name="styleSheet">
-                <string notr="true">#addstaffbtn{
+                <string notr="true">#addschedbtn{
 border: 1px solid white;
 border-radius: 5px;
 margin: 0 5px;
@@ -262,12 +204,12 @@ background-color: #B10303;
 color: white;
 }
 
-#addstaffbtn:hover{
+#addschedbtn:hover{
 	color: black;
 }</string>
                </property>
                <property name="text">
-                <string>Add</string>
+                <string>Add Schedule</string>
                </property>
               </widget>
              </item>
@@ -290,7 +232,106 @@ color: white;
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
-              <widget class="QTableWidget" name="tableWidget"/>
+              <widget class="QCalendarWidget" name="calendarWidget">
+               <property name="styleSheet">
+                <string notr="true">/* Calendar Widget General */
+QCalendarWidget {
+    background-color: #ffffff;  /* Background color of the entire calendar widget */
+    border: 1px solid #a1a1a1;  /* Border of the calendar widget */
+    font-family: 'Arial', sans-serif;  /* Font family for the calendar text */
+    font-size: 12px;  /* Font size for the calendar text */
+    color: #333333;  /* Text color */
+}
+
+/* Navigation Bar */
+QCalendarWidget QToolButton {
+    height: 30px;  /* Height of the navigation buttons */
+    width: 100px;  /* Width of the navigation buttons */
+    color: #ffffff;  /* Text color of the navigation buttons */
+    background-color: #4a90e2;  /* Background color of the navigation buttons */
+    border: none;  /* Remove border of the navigation buttons */
+    margin: 10px;  /* Margin around the navigation buttons */
+}
+
+QCalendarWidget QToolButton::hover {
+    background-color: #357ab8;  /* Background color of the navigation buttons on hover */
+}
+
+QCalendarWidget QToolButton#qt_calendar_prevmonth {
+    qproperty-icon: url(left_arrow.png);  /* Path to your left arrow icon */
+}
+
+QCalendarWidget QToolButton#qt_calendar_nextmonth {
+    qproperty-icon: url(right_arrow.png);  /* Path to your right arrow icon */
+}
+
+/* Header Section (Month and Year) */
+QCalendarWidget QSpinBox {
+    width: 80px;  /* Width of the month/year selector */
+    color: #ffffff;  /* Text color of the month/year selector */
+    background-color: #4a90e2;  /* Background color of the month/year selector */
+    border: none;  /* Remove border of the month/year selector */
+}
+
+QCalendarWidget QSpinBox::up-button {
+    subcontrol-origin: border;  /* Origin of the up button control */
+    subcontrol-position: top right;  /* Position of the up button control */
+}
+
+QCalendarWidget QSpinBox::down-button {
+    subcontrol-origin: border;  /* Origin of the down button control */
+    subcontrol-position: bottom right;  /* Position of the down button control */
+}
+
+QCalendarWidget QSpinBox::up-arrow {
+    width: 10px;  /* Width of the up arrow */
+    height: 10px;  /* Height of the up arrow */
+}
+
+QCalendarWidget QSpinBox::down-arrow {
+    width: 10px;  /* Width of the down arrow */
+    height: 10px;  /* Height of the down arrow */
+}
+
+/* Weekdays Section */
+QCalendarWidget QTableView {
+    alternate-background-color: #f2f2f2;  /* Alternate row background color */
+}
+
+QCalendarWidget QTableView QHeaderView::section {
+    background-color: #4a90e2;  /* Background color of the weekdays header */
+    color: #ffffff;  /* Text color of the weekdays header */
+    padding: 5px;  /* Padding for the weekdays header */
+    border: none;  /* Remove border of the weekdays header */
+}
+
+/* Days Section */
+QCalendarWidget QTableView::item {
+    background-color: #ffffff;  /* Background color of the day cells */
+    color: #333333;  /* Text color of the day cells */
+    border: none;  /* Remove border of the day cells */
+}
+
+QCalendarWidget QTableView::item:selected {
+    background-color: #4a90e2;  /* Background color of the selected day cell */
+    color: #ffffff;  /* Text color of the selected day cell */
+}
+
+QCalendarWidget QTableView::item:disabled {
+    color: #cccccc;  /* Text color of the disabled day cells */
+}
+
+QCalendarWidget QWidget#qt_calendar_navigationbar {
+    background-color: #4a90e2;  /* Background color of the navigation bar */
+}
+
+QCalendarWidget QTableView::item:hover {
+    background-color: #357ab8;  /* Background color of the day cells on hover */
+    color: #ffffff;  /* Text color of the day cells on hover */
+}
+</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'addstaffPyUKfb.ui'
+## Form generated from reading UI file 'updatestaffQqbUmZ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from msilib import Dialog
-import sys
 from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt)
 from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
@@ -19,12 +17,16 @@ from PyQt5.QtWidgets import *
 import psycopg2
 
 
-class AddStaffDialog(object):
+class UpdateStaffDialog(object):
+    def __init__(self, staff_id, dialog):
+        super(UpdateStaffDialog, self).__init__()
+        self.staff_id = staff_id  
+        self.dialog = dialog 
+        
     def setupUi(self, Dialog):
         if Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(618, 616)
-        self.dialog = Dialog
+        Dialog.resize(529, 666)
         self.gridLayout = QGridLayout(Dialog)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
@@ -74,6 +76,8 @@ class AddStaffDialog(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.widget_3 = QWidget(self.widget_2)
         self.widget_3.setObjectName(u"widget_3")
+        self.widget_3.setMinimumSize(QSize(0, 0))
+        self.widget_3.setMaximumSize(QSize(16777215, 16777215))
         self.horizontalLayout_2 = QHBoxLayout(self.widget_3)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -219,22 +223,22 @@ class AddStaffDialog(object):
         self.widget_17.setObjectName(u"widget_17")
         self.verticalLayout_6 = QVBoxLayout(self.widget_17)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.pinlabel_2 = QLabel(self.widget_17)
-        self.pinlabel_2.setObjectName(u"pinlabel_2")
-        self.pinlabel_2.setFont(font)
-        self.pinlabel_2.setStyleSheet(u"color: #B10303;")
-
-        self.verticalLayout_6.addWidget(self.pinlabel_2)
-
-        self.pininput = QLineEdit(self.widget_17)
+        self.pininput = QLabel(self.widget_17)
         self.pininput.setObjectName(u"pininput")
-        self.pininput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+        self.pininput.setFont(font)
+        self.pininput.setStyleSheet(u"color: #B10303;")
+
+        self.verticalLayout_6.addWidget(self.pininput)
+
+        self.pinlabel = QLineEdit(self.widget_17)
+        self.pinlabel.setObjectName(u"pinlabel")
+        self.pinlabel.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"
 "padding: 4px;\n"
 "")
 
-        self.verticalLayout_6.addWidget(self.pininput)
+        self.verticalLayout_6.addWidget(self.pinlabel)
 
 
         self.horizontalLayout_4.addWidget(self.widget_17)
@@ -261,14 +265,14 @@ class AddStaffDialog(object):
 
         self.verticalLayout_8.addWidget(self.hdlabel)
 
-        self.dhinput = QDateEdit(self.widget_18)
-        self.dhinput.setObjectName(u"dhinput")
-        self.dhinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
+        self.hdinput = QDateEdit(self.widget_18)
+        self.hdinput.setObjectName(u"hdinput")
+        self.hdinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"
 "padding: 4px;")
 
-        self.verticalLayout_8.addWidget(self.dhinput)
+        self.verticalLayout_8.addWidget(self.hdinput)
 
 
         self.horizontalLayout_5.addWidget(self.widget_18)
@@ -344,15 +348,15 @@ class AddStaffDialog(object):
 
         self.gridLayout_5.addWidget(self.widget_24, 0, 0, 1, 1)
 
-        self.addbtn = QPushButton(self.widget_21)
-        self.addbtn.setObjectName(u"addbtn")
-        self.addbtn.setStyleSheet(u"background-color: #B10303;\n"
+        self.updatebtn = QPushButton(self.widget_21)
+        self.updatebtn.setObjectName(u"updatebtn")
+        self.updatebtn.setStyleSheet(u"background-color: #B10303;\n"
 "color: white;\n"
 "border: 1px solid #B10303;\n"
 "border-radius: 4px;\n"
 "padding: 7px;")
 
-        self.gridLayout_5.addWidget(self.addbtn, 0, 1, 1, 1)
+        self.gridLayout_5.addWidget(self.updatebtn, 0, 1, 1, 1)
 
         self.widget_25 = QWidget(self.widget_21)
         self.widget_25.setObjectName(u"widget_25")
@@ -376,43 +380,41 @@ class AddStaffDialog(object):
         self.gridLayout.setColumnStretch(0, 1)
 
         self.retranslateUi(Dialog)
-        
-        self.addbtn.clicked.connect(self.add_employee)
-        self.cancelbtn.clicked.connect(Dialog.close)
 
         QMetaObject.connectSlotsByName(Dialog)
         
+        
         self.populateComboBox()
+        self.updatebtn.clicked.connect(self.update_staff)
+        self.cancelbtn.clicked.connect(Dialog.close)
         
     # setupUi
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"Add Staff", None))
+        self.label.setText(QCoreApplication.translate("Dialog", u"Update Staff", None))
         self.fnamelabel.setText(QCoreApplication.translate("Dialog", u"Firstname", None))
         self.lnamelabel.setText(QCoreApplication.translate("Dialog", u"Lastname", None))
         self.phonelabel.setText(QCoreApplication.translate("Dialog", u"Phone", None))
         self.emaillabel.setText(QCoreApplication.translate("Dialog", u"Email", None))
         self.addresslabel.setText(QCoreApplication.translate("Dialog", u"Address", None))
-        self.pinlabel_2.setText(QCoreApplication.translate("Dialog", u"PIN", None))
+        self.pininput.setText(QCoreApplication.translate("Dialog", u"PIN", None))
         self.hdlabel.setText(QCoreApplication.translate("Dialog", u"Hire date", None))
         self.deptlabel.setText(QCoreApplication.translate("Dialog", u"Department", None))
         self.cancelbtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
-        self.addbtn.setText(QCoreApplication.translate("Dialog", u"Add", None))
+        self.updatebtn.setText(QCoreApplication.translate("Dialog", u"Update", None))
     # retranslateUi
-
     
-    
-    def add_employee(self):
+    def update_staff(self):
         # Collect data from the input fields
         fname = self.fnameinput.text()
         lname = self.lnameinput.text()
         phone = self.phoneinput.text()
         email = self.emailinput.text()
-        hire_date = self.dhinput.date().toString("yyyy-MM-dd")
+        hire_date = self.hdinput.date().toString("yyyy-MM-dd")
         department_id = self.deptinput.currentData()
         address = self.addressinput.text()
-        pin = self.pininput.text()
+        pin = self.pinlabel.text()
 
         # Connect to the PostgreSQL database
         try:
@@ -420,25 +422,28 @@ class AddStaffDialog(object):
             cursor = conn.cursor()
             
             # Insert data into the employees table
-            insert_query = """
-                INSERT INTO employees (first_name, last_name, phone, email, department_id, hire_date, address, emp_pin)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(insert_query, (fname, lname, phone, email, department_id, hire_date, address, pin))
+            update_query = """
+                UPDATE employees
+                SET first_name = %s, last_name = %s, phone = %s, email = %s, department_id = %s,
+                    hire_date = %s, address = %s, emp_pin = %s
+                WHERE employee_id = %s
+              """
+            cursor.execute(update_query, (fname, lname, phone, email, department_id, hire_date, address, pin, self.staff_id))
             conn.commit()
+        
+
 
             cursor.close()
             conn.close()
 
             # Show a message box with success
-            QMessageBox.information(None, "Success", "Employee added successfully!")
+            QMessageBox.information(None, "Success", "Employee updated successfully!")
             
             self.dialog.close()
 
         except Exception as e:
             QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")
-    
-    
+
     def populateComboBox(self):
         try:
             # Connect to the PostgreSQL database
@@ -458,3 +463,4 @@ class AddStaffDialog(object):
             connection.close()
         except psycopg2.Error as error:
             print(f"Error while connecting to database: {error}")
+     

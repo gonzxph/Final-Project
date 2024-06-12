@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'staff1fSXHqX.ui'
+## Form generated from reading UI file 'schedule1mMSQze.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -9,19 +9,14 @@
 ################################################################################
 
 from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt, QDate)
+    QRect, QSize, QUrl, Qt)
 from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
     QRadialGradient)
 from PyQt5.QtWidgets import *
-import psycopg2  # Import psycopg2 for PostgreSQL operations
-import datetime
-from PyQt5.uic import loadUi
-from ui_addstaff import AddStaffDialog
-from ui_updatestaff import UpdateStaffDialog
 
 
-class StaffTab(object):
+class ScheduleTab(object):
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -51,12 +46,26 @@ class StaffTab(object):
 
         self.gridLayout.addWidget(self.pushButton, 0, 0, 1, 1)
 
+
         self.verticalLayout.addWidget(self.widget_3)
 
         self.widget_4 = QWidget(self.widget)
         self.widget_4.setObjectName(u"widget_4")
         self.gridLayout_2 = QGridLayout(self.widget_4)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.schedbtn = QPushButton(self.widget_4)
+        self.schedbtn.setObjectName(u"schedbtn")
+        self.schedbtn.setStyleSheet(u"#schedbtn{\n"
+"background-color: #B10303;\n"
+"border: 1px solid white;\n"
+"border-radius: 5px;\n"
+"margin: 0 40px;\n"
+"padding: 7px;\n"
+"color: white;\n"
+"}")
+
+        self.gridLayout_2.addWidget(self.schedbtn, 1, 0, 1, 1)
+
         self.staffbtn = QPushButton(self.widget_4)
         self.staffbtn.setObjectName(u"staffbtn")
         self.staffbtn.setStyleSheet(u"#staffbtn{\n"
@@ -65,31 +74,14 @@ class StaffTab(object):
 "margin: 0 40px;\n"
 "padding: 7px;\n"
 "color: white;\n"
-"background-color: #B10303;\n"
 "}\n"
 "\n"
 "#staffbtn:hover{\n"
-"	color: black;\n"
-"}")
-
-        self.gridLayout_2.addWidget(self.staffbtn, 0, 0, 1, 1)
-
-        self.schedbtn = QPushButton(self.widget_4)
-        self.schedbtn.setObjectName(u"schedbtn")
-        self.schedbtn.setStyleSheet(u"#schedbtn{\n"
-"border: 1px solid white;\n"
-"border-radius: 5px;\n"
-"margin: 0 40px;\n"
-"padding: 7px;\n"
-"color: white;\n"
-"}\n"
-"\n"
-"#schedbtn:hover{\n"
 "	background-color: #B10303;\n"
 "	color: black;\n"
 "}")
 
-        self.gridLayout_2.addWidget(self.schedbtn, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.staffbtn, 0, 0, 1, 1)
 
         self.kioskbtn = QPushButton(self.widget_4)
         self.kioskbtn.setObjectName(u"kioskbtn")
@@ -122,6 +114,7 @@ class StaffTab(object):
         self.widget_6.setObjectName(u"widget_6")
 
         self.verticalLayout.addWidget(self.widget_6)
+
 
         self.horizontalLayout.addWidget(self.widget)
 
@@ -169,61 +162,13 @@ class StaffTab(object):
 
         self.horizontalLayout_2.addWidget(self.widget_10)
 
-        self.widget_14 = QWidget(self.widget_9)
-        self.widget_14.setObjectName(u"widget_14")
-        self.horizontalLayout_5 = QHBoxLayout(self.widget_14)
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.deletestaffbtn = QPushButton(self.widget_14)
-        self.deletestaffbtn.setObjectName(u"deletestaffbtn")
-        self.deletestaffbtn.setStyleSheet(u"#deletestaffbtn{\n"
-"border: 1px solid white;\n"
-"border-radius: 5px;\n"
-"margin: 0 5px;\n"
-"padding: 7px;\n"
-"background-color: #B10303;\n"
-"color: white;\n"
-"}\n"
-"\n"
-"#deletestaffbtn:hover{\n"
-"	color: black;\n"
-"}")
-
-        self.horizontalLayout_5.addWidget(self.deletestaffbtn)
-
-
-        self.horizontalLayout_2.addWidget(self.widget_14)
-
-        self.widget_15 = QWidget(self.widget_9)
-        self.widget_15.setObjectName(u"widget_15")
-        self.horizontalLayout_6 = QHBoxLayout(self.widget_15)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.updatestaffbtn = QPushButton(self.widget_15)
-        self.updatestaffbtn.setObjectName(u"updatestaffbtn")
-        self.updatestaffbtn.setStyleSheet(u"#updatestaffbtn{\n"
-"border: 1px solid white;\n"
-"border-radius: 5px;\n"
-"margin: 0 5px;\n"
-"padding: 7px;\n"
-"background-color: #B10303;\n"
-"color: white;\n"
-"}\n"
-"\n"
-"#updatestaffbtn:hover{\n"
-"	color: black;\n"
-"}")
-
-        self.horizontalLayout_6.addWidget(self.updatestaffbtn)
-
-
-        self.horizontalLayout_2.addWidget(self.widget_15)
-
         self.widget_11 = QWidget(self.widget_9)
         self.widget_11.setObjectName(u"widget_11")
         self.gridLayout_4 = QGridLayout(self.widget_11)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.addstaffbtn = QPushButton(self.widget_11)
-        self.addstaffbtn.setObjectName(u"addstaffbtn")
-        self.addstaffbtn.setStyleSheet(u"#addstaffbtn{\n"
+        self.addschedbtn = QPushButton(self.widget_11)
+        self.addschedbtn.setObjectName(u"addschedbtn")
+        self.addschedbtn.setStyleSheet(u"#addschedbtn{\n"
 "border: 1px solid white;\n"
 "border-radius: 5px;\n"
 "margin: 0 5px;\n"
@@ -232,19 +177,17 @@ class StaffTab(object):
 "color: white;\n"
 "}\n"
 "\n"
-"#addstaffbtn:hover{\n"
+"#addschedbtn:hover{\n"
 "	color: black;\n"
 "}")
 
-        self.gridLayout_4.addWidget(self.addstaffbtn, 0, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.addschedbtn, 0, 0, 1, 1)
 
 
         self.horizontalLayout_2.addWidget(self.widget_11)
 
-        self.horizontalLayout_2.setStretch(0, 6)
+        self.horizontalLayout_2.setStretch(0, 9)
         self.horizontalLayout_2.setStretch(1, 1)
-        self.horizontalLayout_2.setStretch(2, 1)
-        self.horizontalLayout_2.setStretch(3, 1)
 
         self.verticalLayout_2.addWidget(self.widget_9)
 
@@ -258,12 +201,113 @@ class StaffTab(object):
         self.table.setStyleSheet(u"")
         self.gridLayout_6 = QGridLayout(self.table)
         self.gridLayout_6.setObjectName(u"gridLayout_6")
-        self.tableWidget = QTableWidget(self.table)
-        self.tableWidget.setObjectName(u"tableWidget")
+        self.calendarWidget = QCalendarWidget(self.table)
+        self.calendarWidget.setObjectName(u"calendarWidget")
+        self.calendarWidget.setStyleSheet(u"/* Calendar Widget General */\n"
+"QCalendarWidget {\n"
+"    background-color: #ffffff;  /* Background color of the entire calendar widget */\n"
+"    border: 1px solid #a1a1a1;  /* Border of the calendar widget */\n"
+"    font-family: 'Arial', sans-serif;  /* Font family for the calendar text */\n"
+"    font-size: 12px;  /* Font size for the calendar text */\n"
+"    color: #333333;  /* Text color */\n"
+"}\n"
+"\n"
+"/* Navigation Bar */\n"
+"QCalendarWidget QToolButton {\n"
+"    height: 30px;  /* Height of the navigation buttons */\n"
+"    width: 100px;  /* Width of the navigation buttons */\n"
+"    color: #ffffff;  /* Text color of the navigation buttons */\n"
+"    background-color: #4a90e2;  /* Background color of the navigation buttons */\n"
+"    border: none;  /* Remove border of the navigation buttons */\n"
+"    margin: 10px;  /* Margin around the navigation buttons */\n"
+"}\n"
+"\n"
+"QCalendarWidget QToolButton::hover {\n"
+"    background-color: #357ab8;  /* Background color of the navigation buttons on hover"
+                        " */\n"
+"}\n"
+"\n"
+"QCalendarWidget QToolButton#qt_calendar_prevmonth {\n"
+"    qproperty-icon: url(left_arrow.png);  /* Path to your left arrow icon */\n"
+"}\n"
+"\n"
+"QCalendarWidget QToolButton#qt_calendar_nextmonth {\n"
+"    qproperty-icon: url(right_arrow.png);  /* Path to your right arrow icon */\n"
+"}\n"
+"\n"
+"/* Header Section (Month and Year) */\n"
+"QCalendarWidget QSpinBox {\n"
+"    width: 80px;  /* Width of the month/year selector */\n"
+"    color: #ffffff;  /* Text color of the month/year selector */\n"
+"    background-color: #4a90e2;  /* Background color of the month/year selector */\n"
+"    border: none;  /* Remove border of the month/year selector */\n"
+"}\n"
+"\n"
+"QCalendarWidget QSpinBox::up-button {\n"
+"    subcontrol-origin: border;  /* Origin of the up button control */\n"
+"    subcontrol-position: top right;  /* Position of the up button control */\n"
+"}\n"
+"\n"
+"QCalendarWidget QSpinBox::down-button {\n"
+"    subcontrol-origin: border;  /* Origin of the down button control */\n"
+"    subcon"
+                        "trol-position: bottom right;  /* Position of the down button control */\n"
+"}\n"
+"\n"
+"QCalendarWidget QSpinBox::up-arrow {\n"
+"    width: 10px;  /* Width of the up arrow */\n"
+"    height: 10px;  /* Height of the up arrow */\n"
+"}\n"
+"\n"
+"QCalendarWidget QSpinBox::down-arrow {\n"
+"    width: 10px;  /* Width of the down arrow */\n"
+"    height: 10px;  /* Height of the down arrow */\n"
+"}\n"
+"\n"
+"/* Weekdays Section */\n"
+"QCalendarWidget QTableView {\n"
+"    alternate-background-color: #f2f2f2;  /* Alternate row background color */\n"
+"}\n"
+"\n"
+"QCalendarWidget QTableView QHeaderView::section {\n"
+"    background-color: #4a90e2;  /* Background color of the weekdays header */\n"
+"    color: #ffffff;  /* Text color of the weekdays header */\n"
+"    padding: 5px;  /* Padding for the weekdays header */\n"
+"    border: none;  /* Remove border of the weekdays header */\n"
+"}\n"
+"\n"
+"/* Days Section */\n"
+"QCalendarWidget QTableView::item {\n"
+"    background-color: #ffffff;  /* Background color of the day cells "
+                        "*/\n"
+"    color: #333333;  /* Text color of the day cells */\n"
+"    border: none;  /* Remove border of the day cells */\n"
+"}\n"
+"\n"
+"QCalendarWidget QTableView::item:selected {\n"
+"    background-color: #4a90e2;  /* Background color of the selected day cell */\n"
+"    color: #ffffff;  /* Text color of the selected day cell */\n"
+"}\n"
+"\n"
+"QCalendarWidget QTableView::item:disabled {\n"
+"    color: #cccccc;  /* Text color of the disabled day cells */\n"
+"}\n"
+"\n"
+"QCalendarWidget QWidget#qt_calendar_navigationbar {\n"
+"    background-color: #4a90e2;  /* Background color of the navigation bar */\n"
+"}\n"
+"\n"
+"QCalendarWidget QTableView::item:hover {\n"
+"    background-color: #357ab8;  /* Background color of the day cells on hover */\n"
+"    color: #ffffff;  /* Text color of the day cells on hover */\n"
+"}\n"
+"")
 
-        self.gridLayout_6.addWidget(self.tableWidget, 0, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.calendarWidget, 0, 0, 1, 1)
+
 
         self.gridLayout_5.addWidget(self.table, 0, 0, 1, 1)
+
 
         self.verticalLayout_2.addWidget(self.widget_8)
 
@@ -276,114 +320,18 @@ class StaffTab(object):
         self.horizontalLayout.setStretch(0, 1)
         self.horizontalLayout.setStretch(1, 5)
         MainWindow.setCentralWidget(self.centralwidget)
-        
-        
-        self.addstaffbtn.clicked.connect(self.open_add_staff_dialog)
-        self.updatestaffbtn.clicked.connect(self.open_update_staff_dialog)
 
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
-
-        # Load data from the database
-        self.load_data()
-
     # setupUi
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.pushButton.setText("")
-        self.staffbtn.setText(QCoreApplication.translate("MainWindow", u"Staff", None))
         self.schedbtn.setText(QCoreApplication.translate("MainWindow", u"Schedule", None))
+        self.staffbtn.setText(QCoreApplication.translate("MainWindow", u"Staff", None))
         self.kioskbtn.setText(QCoreApplication.translate("MainWindow", u"KIOSK", None))
-        self.deletestaffbtn.setText(QCoreApplication.translate("MainWindow", u"Delete", None))
-        self.updatestaffbtn.setText(QCoreApplication.translate("MainWindow", u"Update", None))
-        self.addstaffbtn.setText(QCoreApplication.translate("MainWindow", u"Add", None))
-
+        self.addschedbtn.setText(QCoreApplication.translate("MainWindow", u"Add Schedule", None))
     # retranslateUi
 
-    def load_data(self):
-        # Connect to the PostgreSQL database
-        conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
-        cursor = conn.cursor()
-
-        # Retrieve data from the employees table including the staff ID
-        cursor.execute('SELECT employee_id, first_name, last_name, address, hire_date, phone, email, emp_pin FROM employees')
-        rows = cursor.fetchall()
-
-        self.tableWidget.setColumnCount(8)  # Set the number of columns including the hidden ID column
-        self.tableWidget.setHorizontalHeaderLabels(['ID', 'First Name', 'Last Name', 'Address', 'Hire Date', 'Phone', 'Email', 'PIN'])
-        self.tableWidget.setRowCount(len(rows))  # Set the number of rows
-
-        for row_idx, row_data in enumerate(rows):
-            for col_idx, col_data in enumerate(row_data):
-                if isinstance(col_data, datetime.date):
-                    col_data = col_data.strftime('%Y-%m-%d')  # Convert the date to string
-                self.tableWidget.setItem(row_idx, col_idx, QTableWidgetItem(str(col_data)))
-
-        # Hide the ID column
-        self.tableWidget.setColumnHidden(0, True)
-
-        # Close the connection
-        cursor.close()
-        conn.close()
-
-
-    def open_add_staff_dialog(self):
-        # Create an instance of the add staff dialog
-        self.add_staff_dialog = QDialog()
-        self.ui = AddStaffDialog()
-        self.ui.setupUi(self.add_staff_dialog)
-
-        # Connect any signals or slots as needed
-
-        # Show the dialog
-        self.add_staff_dialog.show()
-    
-    def refresh_table(self):
-        self.load_data()
-        
-    def open_update_staff_dialog(self):
-        # Get the selected staff's information from the table
-        selected_row = self.tableWidget.currentRow()
-        if selected_row != -1:  # Ensure a row is selected
-            staff_id = self.tableWidget.item(selected_row, 0).text()  # Assuming ID is in the first column
-            first_name = self.tableWidget.item(selected_row, 1).text()
-            last_name = self.tableWidget.item(selected_row, 2).text()
-            address = self.tableWidget.item(selected_row, 3).text()
-            hire_date = self.tableWidget.item(selected_row, 4).text()
-            phone = self.tableWidget.item(selected_row, 5).text()
-            email = self.tableWidget.item(selected_row, 6).text()
-            emp_pin = self.tableWidget.item(selected_row, 7).text()
-
-            # Create an instance of the update staff dialog
-            self.update_staff_dialog = QDialog()
-            self.ui = UpdateStaffDialog(staff_id, self.update_staff_dialog)
-            self.ui.setupUi(self.update_staff_dialog)
-
-            # Set the staff's information in the update staff dialog
-            self.ui.fnameinput.setText(first_name)
-            self.ui.lnameinput.setText(last_name)
-            self.ui.addressinput.setText(address)
-            self.ui.phoneinput.setText(phone)
-            self.ui.emailinput.setText(email)
-            self.ui.pinlabel.setText(emp_pin)
-            self.ui.hdinput.setDate(QDate.fromString(hire_date, "yyyy-MM-dd"))
-
-            # Connect any signals or slots as needed
-
-            # Show the dialog
-            self.update_staff_dialog.exec_()
-
-        
-
-
-# if __name__ == "__main__":
-#     import sys
-
-#     app = QApplication(sys.argv)
-#     MainWindow = QMainWindow()
-#     ui = Staff()
-#     ui.setupUi(MainWindow)
-#     MainWindow.show()
-#     sys.exit(app.exec_())

@@ -1,8 +1,10 @@
 import sys
 import psycopg2
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QDialog, QApplication, QStackedWidget, QGridLayout, QFrame, QLabel, QWidget, QCalendarWidget
+from PyQt5.QtWidgets import QDialog, QMainWindow, QApplication, QStackedWidget, QGridLayout, QFrame, QLabel, QWidget, QMessageBox
 from ui_login import Ui_Form
+from ui_staff import StaffTab
+from ui_schedule1 import ScheduleTab
 from wesdw import widgets  # Ensure this imports the correct widget class
 
 # Database connection setup
@@ -44,24 +46,34 @@ class AddSchedScreen(QWidget):  # Changed to QWidget
         self.f.setGeometry(0, 0, int(self.frame.width()), int(self.frame.height()))
         super().resizeEvent(event)  # Ensure the base class resizeEvent is also called
 
-class StaffScreen(QDialog):
-    def __init__(self, open_schedule_func):
+class StaffScreen(QMainWindow):  # Changed to QMainWindow
+    def __init__(self, stacked_widget):
         super(StaffScreen, self).__init__()
-        loadUi("staff.ui", self)
-        self.setFixedSize(self.width(), self.height())
-        self.btnsched.clicked.connect(open_schedule_func)  # Connect to the open_schedule method
+        self.ui = StaffTab()
+        self.ui.setupUi(self)  # Set up the UI
+        self.stacked_widget = stacked_widget
+        self.ui.schedbtn.clicked.connect(self.open_schedule)  # Connect to the open_schedule method
+        
+    def open_schedule(self):
+        sched = ScheduleScreen(self.stacked_widget)
+        self.stacked_widget.addWidget(sched)
+        self.stacked_widget.setCurrentWidget(sched)
 
-class ScheduleScreen(QDialog):
+class ScheduleScreen(QMainWindow):
     def __init__(self, stacked_widget):
         super(ScheduleScreen, self).__init__()
-        loadUi("schedule.ui", self)
-        self.setFixedSize(self.width(), self.height())
+        self.ui = ScheduleTab()
+        self.ui.setupUi(self)  # Set up the UI
         self.stacked_widget = stacked_widget
-        self.btnstaff.clicked.connect(self.open_staff)
-        self.btnaddsched.clicked.connect(self.open_addsched)
+        # Ensure the button is correctly referenced
+        if hasattr(self.ui, 'staffbtn'):
+            self.ui.staffbtn.clicked.connect(self.open_staff)
+        else:
+            print("Error: 'staffbtn' not found in UI setup")
+        # self.addschedbtn.clicked.connect(self.open_addsched)
 
     def open_staff(self):
-        staff = StaffScreen(self.open_schedule)
+        staff = StaffScreen(self.stacked_widget)
         self.stacked_widget.addWidget(staff)
         self.stacked_widget.setCurrentWidget(staff)
 
@@ -79,7 +91,6 @@ class LoginScreen(QDialog):
     def __init__(self, stacked_widget):
         super(LoginScreen, self).__init__()
         self.ui = Ui_Form()  # Instantiate the UI class
-        self.setFixedSize(1006, 575)
         self.ui.setupUi(self)  # Set up the UI
         self.stacked_widget = stacked_widget
         self.ui.btnLogin.clicked.connect(self.loginfunction)
@@ -95,7 +106,7 @@ class LoginScreen(QDialog):
             self.ui.error.setText('Input all field')
         else:
             if result_pass and result_pass[0] == password:
-                self.open_schedule()
+                self.open_staff()
             else:
                 self.ui.error.setText('Invalid Email or Password')
 
@@ -103,10 +114,16 @@ class LoginScreen(QDialog):
         sched = ScheduleScreen(self.stacked_widget)  # Pass the stacked widget instance
         self.stacked_widget.addWidget(sched)
         self.stacked_widget.setCurrentWidget(sched)
+        
+    def open_staff(self):
+        staff = StaffScreen(self.stacked_widget)
+        self.stacked_widget.addWidget(staff)
+        self.stacked_widget.setCurrentWidget(staff)
 
-app = QApplication(sys.argv)
-widget = QStackedWidget()
-login = LoginScreen(widget)
-widget.addWidget(login)
-widget.show()
-sys.exit(app.exec_())
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    widget = QStackedWidget()
+    login = LoginScreen(widget)
+    widget.addWidget(login)
+    widget.show()
+    sys.exit(app.exec_())
