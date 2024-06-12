@@ -70,7 +70,8 @@ class ScheduleScreen(QMainWindow):
             self.ui.staffbtn.clicked.connect(self.open_staff)
         else:
             print("Error: 'staffbtn' not found in UI setup")
-        # self.addschedbtn.clicked.connect(self.open_addsched)
+            
+        self.ui.addschedbtn.clicked.connect(self.open_addsched)
 
     def open_staff(self):
         staff = StaffScreen(self.stacked_widget)
