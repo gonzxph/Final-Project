@@ -82,9 +82,11 @@ class widgets(QFrame):
             guide.append(guideline2)
             gx += 0.06
 
+        cursor.execute("SELECT employees.employee_id, first_name,last_name,start_time,end_time,status FROM employees right join schedules on employees.employee_id = schedules.employee_id where shift_date = '"+ self.date +"' order by status,first_name,last_name")
+        employee = cursor.fetchall()
         
-        for a in first:
-            if a != 0 or last[count] != 0:
+        for eID,fName,lName,sTime,eTime,status in employee:
+            if status == "Regular":
                 
                 redframe = ClickableFrame(self.schedFrame)
                 
@@ -95,18 +97,28 @@ class widgets(QFrame):
                 label.setGeometry(10, 10, 150, 30)
 
                 # Connect the doubleClicked signal of redframe to open_dialog method with name[count] as argument
-                yes1.append(a)
-                yes2.append(last[count])
+                yes1.append(sTime-10)
+                yes2.append((eTime + 12)-sTime)
                 redframes.append(redframe)  # Add redframe to the list
                 namez = name[count]
-                redframes[count2].doubleClicked.connect(lambda name=namez: self.open_dialog(name))
+                redframes[count2].doubleClicked.connect(lambda emp_id=eID, emp_name=fName+" "+lName, date=self.date: self.open_dialog(emp_id,emp_name,date,sTime,eTime,status))
                 count2 += 1
-            else:
+                
+            elif status == "Reserve":
+                redframex = QFrame(self.schedFrame)
+               
+                redframex.setStyleSheet("background-color: blue;")
+
+                label = QLabel("Schedule", redframex)
+                label.setGeometry(10, 10, 150, 30)
+
+                redframesx.append(redframex)
+            elif status == "Day off":
                 redframex = QFrame(self.schedFrame)
                
                 redframex.setStyleSheet("background-color: grey;")
 
-                label = QLabel("Schedule", redframe)
+                label = QLabel("Schedule", redframex)
                 label.setGeometry(10, 10, 150, 30)
 
                 redframesx.append(redframex)
@@ -127,7 +139,7 @@ class widgets(QFrame):
             item = self.schedFrame.layout().itemAt(i)
             item.widget().setParent(None)
             del item
-        cursor.execute("SELECT employee_id, first_name,last_name FROM employees")
+        cursor.execute("SELECT employees.employee_id, first_name,last_name FROM employees left join schedules on employees.employee_id = schedules.employee_id order by status,first_name,last_name")
         employee = cursor.fetchall()
         count = 0
         for eID,Fname,Lname in employee:
@@ -183,24 +195,29 @@ class widgets(QFrame):
         v = 0.05
         count = 0
         count2 = 0
-        
-        for a in first:
-            if a != 0 or last[count] != 0:
+        print(len(redframesx))
+        cursor.execute("SELECT status FROM schedules where shift_date = '"+ self.date+"' order by status")
+        employee = cursor.fetchall()
+        for status in employee:
+            print(status)
+            if status[0] == "Regular":
+                print("count",count)
                 redframes[count].setGeometry((int(self.schedScrollArea.width()*.201) + ( int((self.schedScrollArea.width())*.06)*yes1[count])), 
                                          (int(self.schedScrollArea.height()*v)),
-                                         int(((self.schedScrollArea.width())*.0605)*yes2[count]), 
+                                         int(((self.schedScrollArea.width())*.0605)*(yes2[count]+1)), 
                                          int(self.schedScrollArea.height()*.10))
                 
                 count += 1
 
             else:
+                print("count2",count2)
+
                 redframesx[count2].setGeometry(int(self.schedScrollArea.width()*.201), 
                                                (int(self.schedScrollArea.height()*v)),
                                                 int((self.schedScrollArea.width())), 
                                                 int(self.schedScrollArea.height()*.10))
                 
                 count2 += 1 
-               
 
             #     redframes[count].setGeometry(int(self.schedScrollArea.width()*.201), (int(self.schedScrollArea.height()*v)), 61 * int(self.schedScrollArea.width()*.6), int(self.schedScrollArea.width()*.10))
             
@@ -242,6 +259,7 @@ class widgets(QFrame):
         dialog.exec()
         
     def open_add_schedule_dialog(self, emp_id, emp_name, date):
+        
         # Create an instance of the add staff dialog
         self.add_schedule_dialog = QDialog()
         self.ui = AddScheduleDialog()
@@ -254,4 +272,5 @@ class widgets(QFrame):
 
         # Show the dialog
         self.add_schedule_dialog.show()
+        
 

@@ -74,6 +74,7 @@ class ScheduleScreen(QMainWindow):
             
         
         
+        
         self.ui.calendarWidget.selectionChanged.connect(self.ui.printSelectedDate)
         self.ui.addschedbtn.clicked.connect(self.open_addsched)
         
