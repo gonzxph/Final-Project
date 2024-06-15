@@ -12,10 +12,11 @@ conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres'
 cur = conn.cursor()
 
 class AddSchedScreen(QWidget):  # Changed to QWidget
-    def __init__(self, stacked_widget):
+    def __init__(self, stacked_widget, date):
         super(AddSchedScreen, self).__init__()
         self.stacked_widget = stacked_widget
-        self.setMinimumSize(1280, 720)
+        self.date = date
+        self.setMinimumSize(1006, 575)
         self.setWindowTitle('Add Schedule Screen')
 
         # Use the MainWindow content from grip.py
@@ -33,7 +34,7 @@ class AddSchedScreen(QWidget):  # Changed to QWidget
         self.frame.setStyleSheet("background-color: #ECE6E6;")
         self.block.setStyleSheet("background-color: green;")
 
-        self.f = widgets(self.frame)
+        self.f = widgets(self.date, self.frame)
         self.f.setStyleSheet("background-color:lightgrey;")
 
         grid_layout.addWidget(self.frame, 1, 0)
@@ -71,7 +72,13 @@ class ScheduleScreen(QMainWindow):
         else:
             print("Error: 'staffbtn' not found in UI setup")
             
+        
+        
+        self.ui.calendarWidget.selectionChanged.connect(self.ui.printSelectedDate)
         self.ui.addschedbtn.clicked.connect(self.open_addsched)
+        
+        
+        
 
     def open_staff(self):
         staff = StaffScreen(self.stacked_widget)
@@ -84,7 +91,8 @@ class ScheduleScreen(QMainWindow):
         self.stacked_widget.setCurrentWidget(sched)
 
     def open_addsched(self):
-        addsched = AddSchedScreen(self.stacked_widget)
+        date = self.ui.selected_date
+        addsched = AddSchedScreen(self.stacked_widget, date)
         self.stacked_widget.addWidget(addsched)
         self.stacked_widget.setCurrentWidget(addsched)
 

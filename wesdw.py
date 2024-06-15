@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5 import QtGui
 import sys
 import psycopg2
+from ui_addscheduledialog import AddScheduleDialog
 
 first = [1, 2, 0, 1, 1, 2, 0, 1, 1,2,1,1,0]
 last = [7, 5, 4, 9, 12, 5, 0, 9, 12,9,2,12,12]
@@ -30,8 +31,9 @@ class ClickableFrame(QFrame):
     def mouseDoubleClickEvent(self, event):
         self.doubleClicked.emit()
 class widgets(QFrame):
-    def __init__(self, parent=None):
+    def __init__(self, date, parent=None):
         super().__init__(parent)
+        self.date = date
 
         self.schedScrollArea = QScrollArea(self)
         self.schedScrollArea.setGeometry(0, int(self.height() * .05), int(self.width() * .99), int(self.height() * .95))
@@ -127,10 +129,12 @@ class widgets(QFrame):
             del item
         cursor.execute("SELECT employee_id, first_name,last_name FROM employees")
         employee = cursor.fetchall()
+        count = 0
         for eID,Fname,Lname in employee:
-            names = QFrame(self.schedFrame)
+            names = ClickableFrame(self.schedFrame)
             label = QLabel(Fname+" "+Lname, names)
             names.setGeometry(0, int(self.height()*v), int(self.width()*.20), int(self.width()*.10))
+            
             # names.setStyleSheet("background-color: maroon;")
             names.setStyleSheet("""
             background-color: maroon;
@@ -145,8 +149,11 @@ class widgets(QFrame):
             font.setPointSize(20)  # Change 12 to your desired font size
             label.setFont(font)
             namez.append(names)
+            namez[count].doubleClicked.connect(lambda emp_id=eID, emp_name=Fname+" "+Lname, date=self.date: self.open_add_schedule_dialog(emp_id, emp_name, date))
+
             labelz.append(label)
             v += 9.9
+            count +=1
         self.sched()
 
     def resizeEvent(self, event):
@@ -168,7 +175,7 @@ class widgets(QFrame):
         
         for a in range(int(emp_count[0][0])):
             namez[a].setGeometry(0, int(self.schedScrollArea.height()*v), int(self.schedScrollArea.width()*.20), int(self.schedScrollArea.height()*.20))
-            labelz[a].setGeometry( int(namez[a].width()*.20), 20, 180, 25)
+            labelz[a].setGeometry( int(namez[a].width()*.01), 20, int(namez[a].width()*.99), 25)
             # namez[a].hide()
         
             v += .202
@@ -233,4 +240,18 @@ class widgets(QFrame):
         label = QLabel(f"Name: {name}", dialog)
         label.move(20, 20)
         dialog.exec()
+        
+    def open_add_schedule_dialog(self, emp_id, emp_name, date):
+        # Create an instance of the add staff dialog
+        self.add_schedule_dialog = QDialog()
+        self.ui = AddScheduleDialog()
+        self.ui.setupUi(self.add_schedule_dialog)
+
+        # Connect any signals or slots as needed
+        self.ui.nameinput.setText(emp_name)
+        self.ui.dateinput.setText(date)
+        self.ui.emp_id.setText(str(emp_id))
+
+        # Show the dialog
+        self.add_schedule_dialog.show()
 

@@ -324,6 +324,9 @@ class ScheduleTab(object):
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
+        self.printSelectedDate()
+        
+        
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -334,4 +337,9 @@ class ScheduleTab(object):
         self.kioskbtn.setText(QCoreApplication.translate("MainWindow", u"KIOSK", None))
         self.addschedbtn.setText(QCoreApplication.translate("MainWindow", u"Add Schedule", None))
     # retranslateUi
+    
+    def printSelectedDate(self):
+        self.selected_date = self.calendarWidget.selectedDate().toString(Qt.ISODate)
+        print(f"Selected date: {self.selected_date}")
+        return self.selected_date
 
