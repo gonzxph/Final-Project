@@ -30,7 +30,7 @@ class AddSchedScreen(QWidget):  # Changed to QWidget
         self.frame2.setStyleSheet("background-color:#f2f2f2;")
 
         self.block = QLabel(self.frame)
-        self.frame.setStyleSheet("background-color: orange;")
+        self.frame.setStyleSheet("background-color: #ECE6E6;")
         self.block.setStyleSheet("background-color: green;")
 
         self.f = widgets(self.frame)

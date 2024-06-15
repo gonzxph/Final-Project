@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QFrame, QWid
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5 import QtGui
 import sys
+import psycopg2
 
 first = [1, 2, 0, 1, 1, 2, 0, 1, 1,2,1,1,0]
 last = [7, 5, 4, 9, 12, 5, 0, 9, 12,9,2,12,12]
@@ -9,7 +10,8 @@ name = ['Juan Juan', "Jack Jack", "Joe Joe", "Jeff Jeff", "James James", "Jeff J
         "James James","BATO","asda","Motherfucker","Kenneth Cortes"]
 yes1 = []
 yes2 = []
-
+connection = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
+cursor = connection.cursor()
 
 redframes = []  # List to store ClickableFrame instances
 redframesx = []
@@ -84,7 +86,7 @@ class widgets(QFrame):
                 
                 redframe = ClickableFrame(self.schedFrame)
                 
-                redframe.setStyleSheet("background-color: maroon;")
+                redframe.setStyleSheet("background-color: #1B9620;")
                 redframe.setObjectName("redframe")  # Set object name for identification
 
                 label = QLabel("Schedule", redframe)
@@ -114,6 +116,7 @@ class widgets(QFrame):
 
     def name(self):
         global name,namez,labelz
+        
         v = 0
         namez = []
         labelz = []
@@ -122,10 +125,11 @@ class widgets(QFrame):
             item = self.schedFrame.layout().itemAt(i)
             item.widget().setParent(None)
             del item
-      
-        for a in name:
+        cursor.execute("SELECT employee_id, first_name,last_name FROM employees")
+        employee = cursor.fetchall()
+        for eID,Fname,Lname in employee:
             names = QFrame(self.schedFrame)
-            label = QLabel(a, names)
+            label = QLabel(Fname+" "+Lname, names)
             names.setGeometry(0, int(self.height()*v), int(self.width()*.20), int(self.width()*.10))
             # names.setStyleSheet("background-color: maroon;")
             names.setStyleSheet("""
@@ -152,6 +156,8 @@ class widgets(QFrame):
         x = .02
         self.time.setGeometry(0, 0,int(self.width()*1) , int(self.height()*.05))
         self.schedScrollArea.setGeometry(0, int(self.height()*.04), int(self.width()*1), int(self.height()*.95))
+        cursor.execute("SELECT count(employee_id) FROM employees")
+        emp_count = cursor.fetchall()
         for a in range(13):
             guidelines[a].setGeometry(((int(self.time.width()*g)+int(self.time.width()*.2))+2),0 , int(self.time.width()*.007), int(self.time.height()))
             timelabels[a].setGeometry(((int(self.time.width()*x)+int(self.time.width()*.2))),0 , int(self.time.width()*.99), int(self.time.height()))
@@ -160,7 +166,7 @@ class widgets(QFrame):
             x += .06
         v = .01
         
-        for a in range(len(name)):
+        for a in range(int(emp_count[0][0])):
             namez[a].setGeometry(0, int(self.schedScrollArea.height()*v), int(self.schedScrollArea.width()*.20), int(self.schedScrollArea.height()*.20))
             labelz[a].setGeometry( int(namez[a].width()*.20), 20, 180, 25)
             # namez[a].hide()
@@ -196,7 +202,7 @@ class widgets(QFrame):
 
             v += 0.20
             content_height += v
-        self.schedFrame.setMinimumHeight(int(self.schedScrollArea.height()*(.205*len(name))))
+        self.schedFrame.setMinimumHeight(int(self.schedScrollArea.height()*(.205*int(emp_count[0][0]))))
 
         gx = 0.06
         for a in range(13):
