@@ -82,7 +82,32 @@ class widgets(QFrame):
             guide.append(guideline2)
             gx += 0.06
 
-        cursor.execute("SELECT employees.employee_id, first_name,last_name,start_time,end_time,status FROM employees right join schedules on employees.employee_id = schedules.employee_id where shift_date = '"+ self.date +"' order by status,first_name,last_name")
+        cursor.execute("""
+            SELECT 
+                employees.employee_id, 
+                first_name, 
+                last_name, 
+                start_time, 
+                end_time, 
+                status 
+            FROM 
+                employees 
+            RIGHT JOIN 
+                schedules 
+            ON 
+                employees.employee_id = schedules.employee_id 
+            WHERE 
+                shift_date = '""" + self.date + """'
+            ORDER BY 
+                CASE status 
+                    WHEN 'Regular' THEN 1
+                    WHEN 'Reserve' THEN 2
+                    WHEN 'Day off' THEN 3
+                    ELSE 4
+                END,
+                start_time
+        """)
+
         employee = cursor.fetchall()
         
         for eID,fName,lName,sTime,eTime,status in employee:
@@ -139,7 +164,29 @@ class widgets(QFrame):
             item = self.schedFrame.layout().itemAt(i)
             item.widget().setParent(None)
             del item
-        cursor.execute("SELECT employees.employee_id, first_name,last_name FROM employees left join schedules on employees.employee_id = schedules.employee_id order by status,first_name,last_name")
+        cursor.execute("""
+            SELECT 
+                employees.employee_id, 
+                first_name, 
+                last_name
+            FROM 
+                employees 
+            left JOIN 
+                schedules 
+            ON 
+                employees.employee_id = schedules.employee_id 
+			WHERE 
+    			(schedules.shift_date = '""" + self.date + """'  OR schedules.shift_date IS NULL)
+            ORDER BY 
+                CASE status 
+                    WHEN 'Regular' THEN 1
+                    WHEN 'Reserve' THEN 2
+                    WHEN 'Day off' THEN 3
+                    ELSE 4
+                END,
+                start_time
+        """)
+
         employee = cursor.fetchall()
         count = 0
         for eID,Fname,Lname in employee:
@@ -175,8 +222,19 @@ class widgets(QFrame):
         x = .02
         self.time.setGeometry(0, 0,int(self.width()*1) , int(self.height()*.05))
         self.schedScrollArea.setGeometry(0, int(self.height()*.04), int(self.width()*1), int(self.height()*.95))
-        cursor.execute("SELECT count(employee_id) FROM employees")
+        cursor.execute("""SELECT 
+                count(employees.employee_id)
+            FROM 
+                employees 
+            left JOIN 
+                schedules 
+            ON 
+                employees.employee_id = schedules.employee_id 
+			WHERE 
+    			(schedules.shift_date = '""" + self.date + """'  OR schedules.shift_date IS NULL)""")
         emp_count = cursor.fetchall()
+        print(emp_count)
+        print(len(namez))
         for a in range(13):
             guidelines[a].setGeometry(((int(self.time.width()*g)+int(self.time.width()*.2))+2),0 , int(self.time.width()*.007), int(self.time.height()))
             timelabels[a].setGeometry(((int(self.time.width()*x)+int(self.time.width()*.2))),0 , int(self.time.width()*.99), int(self.time.height()))
@@ -192,11 +250,26 @@ class widgets(QFrame):
         
             v += .202
 
-        v = 0.05
+        v = 0.06
         count = 0
         count2 = 0
         print(len(redframesx))
-        cursor.execute("SELECT status FROM schedules where shift_date = '"+ self.date+"' order by status")
+        cursor.execute("""
+            SELECT 
+                status 
+            FROM 
+                schedules 
+            WHERE 
+                shift_date = '""" + self.date + """' 
+            ORDER BY 
+                CASE status 
+                    WHEN 'Regular' THEN 1
+                    WHEN 'Reserve' THEN 2
+                    WHEN 'Day off' THEN 3
+                    ELSE 4
+                END,
+                start_time
+        """)    
         employee = cursor.fetchall()
         for status in employee:
             print(status)
@@ -272,5 +345,6 @@ class widgets(QFrame):
 
         # Show the dialog
         self.add_schedule_dialog.show()
+        
         
 

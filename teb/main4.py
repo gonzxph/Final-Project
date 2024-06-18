@@ -1,17 +1,23 @@
 import sys
+import psycopg2
+
 from PyQt6.QtGui import QResizeEvent
 from PyQt6.QtWidgets import QApplication,QFrame, QWidget, QGridLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout, QDialog, QHBoxLayout, QMessageBox,QScrollArea
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
 import time
-
+from datetime import datetime
+connection = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
+cursor = connection.cursor()
+current_date = datetime.now().strftime("%Y-%m-%d")
+print(current_date)
 emp = [
-    {"name": "Juan", "timer": 1, "status": None},
+    {"name": "Juan", "timer": 0, "status": None},
     {"name": "Jack", "timer": 0, "status": None},
     {"name": "Joe", "timer": 0, "status": None},
     {"name": "James", "timer": 0, "status": None},
     {"name": "Emily", "timer": 0, "status": None},
     {"name": "John", "timer": 0, "status": None},
-    {"name": "Emma", "timer": 10, "status": None},
+    {"name": "Emma", "timer": 0, "status": None},
     {"name": "Jacob", "timer": 0, "status": None},
     {"name": "Sophia", "timer": 0, "status": None},
     {"name": "Michael", "timer": 0, "status": None},
@@ -55,16 +61,29 @@ class TimerThread(QThread):
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
+        self.date = current_date
+        
+
         self.initUI()
         self.timers = {}  # Dictionary to store timers for each employee
-        for employee in emp:
-            if employee["timer"] != 0:
-                timer_thread = TimerThread(emp_timer=employee["timer"])  # Pass the initial timer value
-                print(f"Creating timer thread for employee {employee['name']} with timer value {employee['timer']}")
-                timer_thread.timer_updated.connect(lambda seconds, id=employee["id"]: self.update_timer_label(seconds, id))
-                self.timers[employee["id"]] = timer_thread
-                timer_thread.start()  # Start the timer thread immediately
-                timer_thread.start_timer()
+        
+        cursor.execute("""SELECT (first_name ||' '|| last_name),seconds,shift.status,s_id
+                        FROM shift 
+                        INNER JOIN schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
+                        INNER JOIN employees ON employees.employee_id = cast(schedules.employee_id as integer)
+						where shift_date = '"""+ self.date+"""'
+                        """)
+        employee = cursor.fetchall()
+
+        for eName,timerz,status,s_id in employee:
+            if timerz != 0:
+                timer_thread = TimerThread(emp_timer=timerz)  # Pass the initial timer value
+                print(f"Creating timer thread for employee {eName} with timer value {timerz}")
+                timer_thread.timer_updated.connect(lambda seconds, id=s_id: self.update_timer_label(seconds, id))
+                self.timers[s_id] = timer_thread
+                if(status == 1):
+                    timer_thread.start()  # Start the timer thread immediately
+                    timer_thread.start_timer()
     def initUI(self):
         self.setWindowTitle('Main Window')
         self.setGeometry(720, 30, 0, 0)
@@ -128,15 +147,30 @@ class MainWindow(QWidget):
 
         self.frame2.setMinimumHeight(total_height)
         y = 0.
-        for a in range(len(empF)):
+        cursor.execute("""select count(s_id) from shift inner join schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
+						where shift_date = '"""+ self.date+"""'
+                        """)
+        length = cursor.fetchall()
+        print(length)
+        for a in range(length[0][0]):
             empF[a].setGeometry(int(self.empScrollArea.width()*.10),int(self.empScrollArea.height()* y),int(self.empScrollArea.width()*.60),int(self.empScrollArea.height()*.10))
             y += .11
             
     def setFrame2(self):
         global emp, empF
-        for a in emp:
+        
+        cursor.execute("""SELECT (first_name ||' '|| last_name),seconds,shift.status,s_id
+                        FROM shift 
+                        INNER JOIN schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
+                        INNER JOIN employees ON employees.employee_id = cast(schedules.employee_id as integer)
+						where shift_date = '"""+ self.date+"""'
+                        """)
+        employee = cursor.fetchall()
+        
+        
+        for eName,timerz,status,s_id in employee:
             empFrame = QFrame(self.frame2)
-            label = QLabel(a["name"], empFrame)
+            label = QLabel(eName, empFrame)
             hover_style = """
                 QFrame:hover {
                     background-color: purple;
@@ -145,13 +179,13 @@ class MainWindow(QWidget):
             """
             empFrame.setStyleSheet("background-color: violet; border: 2px solid violet; border-radius: 10px;") 
             empF.append(empFrame)
-            empFrame.mousePressEvent = lambda event, name=a["id"]: self.on_empFrame_clicked(name)
+            empFrame.mousePressEvent = lambda event, name=s_id: self.on_empFrame_clicked(name)
 
         self.timer_labels = {}  # Dictionary to store timer labels for each employee
         # Create timer labels for each employee
-        for employee in emp:
+        for eName,timerz,status,s_id in employee:
             timer_label = QLabel("00:00:00", self.frame4)
-            self.timer_labels[employee["id"]] = timer_label
+            self.timer_labels[s_id] = timer_label
             timer_label.hide()
 
         # Create start, pause, and resume buttons
@@ -174,18 +208,30 @@ class MainWindow(QWidget):
 
     def start_button_clicked(self):
         # Retrieve the employee id of the clicked frame
+        cursor.execute("""SELECT (first_name ||' '|| last_name),seconds,shift.status,s_id
+                        FROM shift 
+                        INNER JOIN schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
+                        INNER JOIN employees ON employees.employee_id = cast(schedules.employee_id as integer)
+						where shift_date = '"""+ self.date+"""'
+                        """)
+        employee = cursor.fetchall()
         id = self.current_emp_id
-
+        
         # Check if the timer thread exists for the current employee
         if id in self.timers:
             timer_thread = self.timers[id]
             if not timer_thread.running:
                 # Check if there's a non-zero timer value for the current employee
-                for employee in emp:
-                    if employee["id"] == id and employee["timer"] != 0:
-                        timer_thread.timer = employee["timer"]
+                for eName,timerz,status,s_id in employee:
+                    if s_id == id and timerz != 0:
+                        timer_thread.timer = timerz
                         break
                 timer_thread.start_timer()
+                cursor.execute("""UPDATE shift
+                        SET status = 1
+                        WHERE s_id = %s
+                         """, (id,))
+                connection.commit()
 
     def pause_button_clicked(self):
         # Retrieve the employee id of the clicked frame
@@ -196,6 +242,11 @@ class MainWindow(QWidget):
             timer_thread = self.timers[id]
             if timer_thread.running:
                 timer_thread.pause_timer()
+                cursor.execute("""UPDATE shift
+                        SET status = 0
+                        WHERE s_id = %s
+                         """, (id,))
+                connection.commit()
 
     def resume_button_clicked(self):
         # Retrieve the employee id of the clicked frame
@@ -206,6 +257,11 @@ class MainWindow(QWidget):
             timer_thread = self.timers[id]
             if timer_thread.paused:
                 timer_thread.resume_timer()
+                cursor.execute("""UPDATE shift
+                        SET status = 1
+                        WHERE s_id = %s
+                         """, (id,))
+                connection.commit()
 
     def hide_timer_labels(self):
         for label in self.timer_labels.values():
@@ -259,15 +315,30 @@ class MainWindow(QWidget):
         hours = seconds // 3600
         minutes = (seconds % 3600) // 60
         seconds = seconds % 60
+        print(seconds)
         timer_string = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
         self.timer_labels[id].setText(timer_string)
+        cursor.execute("""SELECT (first_name ||' '|| last_name),seconds,shift.status,s_id
+                        FROM shift 
+                        INNER JOIN schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
+                        INNER JOIN employees ON employees.employee_id = cast(schedules.employee_id as integer)
+						where shift_date = '"""+ self.date+"""'
+                        """)
+        employee = cursor.fetchall()
 
+        
         # Update the corresponding dictionary in emp list
-        for employee in emp:
-            if employee["id"] == id:
-                employee["timer"] = seconds
+        for eName,timerz,status,s_id2 in employee:
+            print(s_id2)
+            if s_id2 == id:
+                print("asdas")
+                cursor.execute("""UPDATE shift
+                        SET seconds = %s
+                        WHERE s_id = %s
+                         """, (seconds, s_id2))
+                connection.commit()
                 break
-        print(emp)
+        # print(emp)
 
 
 if __name__ == '__main__':

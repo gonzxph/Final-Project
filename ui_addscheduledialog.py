@@ -213,7 +213,8 @@ class AddScheduleDialog(object):
 
             cursor.close()
             conn.close()
-
+            
+            
             # Show a message box with success
             QMessageBox.information(None, "Success", "Schedule added successfully!")
             

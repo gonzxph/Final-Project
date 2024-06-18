@@ -378,12 +378,12 @@ class StaffTab(object):
         
 
 
-# if __name__ == "__main__":
-#     import sys
+if __name__ == "__main__":
+    import sys
 
-#     app = QApplication(sys.argv)
-#     MainWindow = QMainWindow()
-#     ui = Staff()
-#     ui.setupUi(MainWindow)
-#     MainWindow.show()
-#     sys.exit(app.exec_())
+    app = QApplication(sys.argv)
+    MainWindow = QMainWindow()
+    ui = StaffTab()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())

@@ -40,7 +40,7 @@ class AddSchedScreen(QWidget):  # Changed to QWidget
         grid_layout.addWidget(self.frame, 1, 0)
         grid_layout.addWidget(self.frame2, 0, 0)
         self.setLayout(grid_layout)
-
+    
     def resizeEvent(self, event):
         frame_width = int(self.height() * 0.8)
         self.frame.setFixedHeight(frame_width)
