@@ -76,6 +76,7 @@ class DeleteSchedDialog(QObject):
         self.horizontalLayout_4 = QHBoxLayout(self.widget_5)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.cancelbtn = QPushButton(self.widget_5)
+        self.cancelbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelbtn.setObjectName(u"cancelbtn")
         self.cancelbtn.setStyleSheet(u"#cancelbtn{\n"
 "background-color: #ECE6E6;\n"
@@ -95,6 +96,7 @@ class DeleteSchedDialog(QObject):
         self.horizontalLayout_5 = QHBoxLayout(self.widget_6)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.deletebtn = QPushButton(self.widget_6)
+        self.deletebtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.deletebtn.setObjectName(u"deletebtn")
         self.deletebtn.setStyleSheet(u"#deletebtn{\n"
 "background-color: #B10303;\n"

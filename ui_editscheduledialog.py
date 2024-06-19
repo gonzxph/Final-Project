@@ -42,6 +42,7 @@ class EditSchedDialog(QObject):
         self.widget.setObjectName(u"widget")
         self.widget.setStyleSheet(u"background-color: rgb(236, 230, 230);")
         self.updatebtn = QPushButton(self.widget)
+        self.updatebtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.updatebtn.setObjectName(u"updatebtn")
         self.updatebtn.setGeometry(QRect(290, 580, 151, 41))
         font = QFont()
@@ -60,6 +61,7 @@ class EditSchedDialog(QObject):
 "	color: black;\n"
 "}")
         self.cancelbtn = QPushButton(self.widget)
+        self.cancelbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelbtn.setObjectName(u"cancelbtn")
         self.cancelbtn.setGeometry(QRect(80, 580, 150, 40))
         self.cancelbtn.setFont(font)

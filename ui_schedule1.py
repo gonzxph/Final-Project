@@ -54,6 +54,7 @@ class ScheduleTab(object):
         self.gridLayout_2 = QGridLayout(self.widget_4)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.schedbtn = QPushButton(self.widget_4)
+        self.schedbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.schedbtn.setObjectName(u"schedbtn")
         self.schedbtn.setStyleSheet(u"#schedbtn{\n"
 "background-color: #B10303;\n"
@@ -67,6 +68,7 @@ class ScheduleTab(object):
         self.gridLayout_2.addWidget(self.schedbtn, 1, 0, 1, 1)
 
         self.staffbtn = QPushButton(self.widget_4)
+        self.staffbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.staffbtn.setObjectName(u"staffbtn")
         self.staffbtn.setStyleSheet(u"#staffbtn{\n"
 "border: 1px solid white;\n"
@@ -84,6 +86,7 @@ class ScheduleTab(object):
         self.gridLayout_2.addWidget(self.staffbtn, 0, 0, 1, 1)
 
         self.kioskbtn = QPushButton(self.widget_4)
+        self.kioskbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.kioskbtn.setObjectName(u"kioskbtn")
         self.kioskbtn.setStyleSheet(u"#kioskbtn{\n"
 "border: 1px solid white;\n"
@@ -167,6 +170,7 @@ class ScheduleTab(object):
         self.gridLayout_4 = QGridLayout(self.widget_11)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.addschedbtn = QPushButton(self.widget_11)
+        self.addschedbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.addschedbtn.setObjectName(u"addschedbtn")
         self.addschedbtn.setStyleSheet(u"#addschedbtn{\n"
 "border: 1px solid white;\n"

@@ -31,17 +31,17 @@ class StaffScreen(QMainWindow):
         self.ui.updatestaffbtn.clicked.connect(self.open_update_staff_dialog)
         self.ui.deletestaffbtn.clicked.connect(self.open_delete_staff_dialog)
         self.ui.addstaffbtn.clicked.connect(self.open_add_staff_dialog)
-        
-        # Initialize the delete staff dialog
+
+        # Initialize the delete, update, and add staff dialogs
         self.delete_staff_dialog = None
         self.update_staff_dialog = None
         self.add_staff_dialog = None
-        
+
     def open_schedule(self):
         sched = ScheduleScreen(self.stacked_widget)
         self.stacked_widget.addWidget(sched)
         self.stacked_widget.setCurrentWidget(sched)
-        
+
     def open_add_staff_dialog(self):
         if self.add_staff_dialog is None:
             # Create an instance of the add staff dialog
@@ -50,17 +50,16 @@ class StaffScreen(QMainWindow):
             self.add_ui.setupUi(self.add_staff_dialog)
             self.add_ui.staff_add.connect(self.ui.load_data)
 
-
         # Show the dialog
         self.add_staff_dialog.exec()
-        
+
     def open_delete_staff_dialog(self):
         selected_row = self.ui.tableWidget.currentRow()
         if selected_row != -1:
             staff_id = self.ui.tableWidget.item(selected_row, 0).text()  # Assuming ID is in the first column
             first_name = self.ui.tableWidget.item(selected_row, 1).text()
             last_name = self.ui.tableWidget.item(selected_row, 2).text()
-            
+
             # Create the delete staff dialog if it doesn't already exist
             if self.delete_staff_dialog is None:
                 self.delete_staff_dialog = QDialog()
@@ -75,9 +74,8 @@ class StaffScreen(QMainWindow):
         
         else:
             QMessageBox.warning(self, "No Selection", "Please select a staff to delete.")
-    
+
     def open_update_staff_dialog(self):
-        # Get the selected staff's information from the table
         selected_row = self.ui.tableWidget.currentRow()
         if selected_row != -1:  # Ensure a row is selected
             staff_id = self.ui.tableWidget.item(selected_row, 0).text()  # Assuming ID is in the first column
@@ -89,8 +87,8 @@ class StaffScreen(QMainWindow):
             email = self.ui.tableWidget.item(selected_row, 6).text()
             emp_pin = self.ui.tableWidget.item(selected_row, 7).text()
 
-            # Create an instance of the update staff dialog
-            if self.delete_staff_dialog is None:
+            # Create the update staff dialog if it doesn't already exist
+            if self.update_staff_dialog is None:
                 self.update_staff_dialog = QDialog()
                 self.update_ui = UpdateStaffDialog(staff_id, self.update_staff_dialog)
                 self.update_ui.setupUi(self.update_staff_dialog)
@@ -105,13 +103,12 @@ class StaffScreen(QMainWindow):
             self.update_ui.pinlabel.setText(emp_pin)
             self.update_ui.hdinput.setDate(QDate.fromString(hire_date, "yyyy-MM-dd"))
 
-            # Connect any signals or slots as needed
-
             # Show the dialog
             self.update_staff_dialog.exec_()
         
         else:
             QMessageBox.warning(self, "No Selection", "Please select a staff to update.")
+
             
 class AddScheduleScreen(QMainWindow):
     def __init__(self, stacked_widget, date):

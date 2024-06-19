@@ -49,6 +49,7 @@ class StaffTab(object):
         self.gridLayout_2 = QGridLayout(self.widget_4)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.staffbtn = QPushButton(self.widget_4)
+        self.staffbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.staffbtn.setObjectName(u"staffbtn")
         self.staffbtn.setStyleSheet(u"#staffbtn{\n"
 "border: 1px solid white;\n"
@@ -66,6 +67,7 @@ class StaffTab(object):
         self.gridLayout_2.addWidget(self.staffbtn, 0, 0, 1, 1)
 
         self.schedbtn = QPushButton(self.widget_4)
+        self.schedbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.schedbtn.setObjectName(u"schedbtn")
         self.schedbtn.setStyleSheet(u"#schedbtn{\n"
 "border: 1px solid white;\n"
@@ -83,6 +85,7 @@ class StaffTab(object):
         self.gridLayout_2.addWidget(self.schedbtn, 1, 0, 1, 1)
 
         self.kioskbtn = QPushButton(self.widget_4)
+        self.kioskbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.kioskbtn.setObjectName(u"kioskbtn")
         self.kioskbtn.setStyleSheet(u"#kioskbtn{\n"
 "border: 1px solid white;\n"
@@ -165,6 +168,7 @@ class StaffTab(object):
         self.horizontalLayout_5 = QHBoxLayout(self.widget_14)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.deletestaffbtn = QPushButton(self.widget_14)
+        self.deletestaffbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.deletestaffbtn.setObjectName(u"deletestaffbtn")
         self.deletestaffbtn.setStyleSheet(u"#deletestaffbtn{\n"
 "border: 1px solid white;\n"
@@ -189,6 +193,7 @@ class StaffTab(object):
         self.horizontalLayout_6 = QHBoxLayout(self.widget_15)
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.updatestaffbtn = QPushButton(self.widget_15)
+        self.updatestaffbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.updatestaffbtn.setObjectName(u"updatestaffbtn")
         self.updatestaffbtn.setStyleSheet(u"#updatestaffbtn{\n"
 "border: 1px solid white;\n"
@@ -213,6 +218,7 @@ class StaffTab(object):
         self.gridLayout_4 = QGridLayout(self.widget_11)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.addstaffbtn = QPushButton(self.widget_11)
+        self.addstaffbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.addstaffbtn.setObjectName(u"addstaffbtn")
         self.addstaffbtn.setStyleSheet(u"#addstaffbtn{\n"
 "border: 1px solid white;\n"

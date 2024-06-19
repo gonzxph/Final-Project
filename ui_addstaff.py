@@ -294,6 +294,7 @@ class AddStaffDialog(QObject):
         self.gridLayout_4 = QGridLayout(self.widget_20)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.cancelbtn = QPushButton(self.widget_20)
+        self.cancelbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelbtn.setObjectName(u"cancelbtn")
         self.cancelbtn.setStyleSheet(u"background-color: rgb(236, 230, 230);\n"
 "color: #B10303;\n"
@@ -326,6 +327,7 @@ class AddStaffDialog(QObject):
         self.gridLayout_5.addWidget(self.widget_24, 0, 0, 1, 1)
 
         self.addbtn = QPushButton(self.widget_21)
+        self.addbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.addbtn.setObjectName(u"addbtn")
         self.addbtn.setStyleSheet(u"background-color: #B10303;\n"
 "color: white;\n"

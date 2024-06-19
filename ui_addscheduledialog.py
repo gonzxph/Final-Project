@@ -29,6 +29,7 @@ class AddScheduleDialog(QObject):
         self.widget.setObjectName(u"widget")
         self.widget.setStyleSheet(u"background-color: rgb(236, 230, 230);")
         self.addbtn = QPushButton(self.widget)
+        self.addbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.addbtn.setObjectName(u"addbtn")
         self.addbtn.setGeometry(QRect(290, 580, 151, 41))
         font = QFont()
@@ -40,6 +41,7 @@ class AddScheduleDialog(QObject):
 "border-radius: 4px;\n"
 "padding: 7px;")
         self.cancelbtn = QPushButton(self.widget)
+        self.cancelbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelbtn.setObjectName(u"cancelbtn")
         self.cancelbtn.setGeometry(QRect(80, 580, 150, 40))
         self.cancelbtn.setFont(font)

@@ -273,21 +273,7 @@ class UpdateStaffDialog(QObject):
         self.widget_19.setObjectName(u"widget_19")
         self.verticalLayout_9 = QVBoxLayout(self.widget_19)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.deptlabel = QLabel(self.widget_19)
-        self.deptlabel.setObjectName(u"deptlabel")
-        self.deptlabel.setFont(font)
-        self.deptlabel.setStyleSheet(u"color: #B10303;")
 
-        self.verticalLayout_9.addWidget(self.deptlabel)
-
-        self.deptinput = QComboBox(self.widget_19)
-        self.deptinput.setObjectName(u"deptinput")
-        self.deptinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
-"border: 1px solid  #B10303;\n"
-"border-radius: 5px;\n"
-"padding: 4px;")
-
-        self.verticalLayout_9.addWidget(self.deptinput)
 
 
         self.horizontalLayout_5.addWidget(self.widget_19)
@@ -309,6 +295,7 @@ class UpdateStaffDialog(QObject):
         self.gridLayout_4 = QGridLayout(self.widget_20)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.cancelbtn = QPushButton(self.widget_20)
+        self.cancelbtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.cancelbtn.setObjectName(u"cancelbtn")
         self.cancelbtn.setStyleSheet(u"background-color: rgb(236, 230, 230);\n"
 "color: #B10303;\n"
@@ -341,6 +328,7 @@ class UpdateStaffDialog(QObject):
         self.gridLayout_5.addWidget(self.widget_24, 0, 0, 1, 1)
 
         self.updatebtn = QPushButton(self.widget_21)
+        self.updatebtn.setCursor(QCursor(Qt.PointingHandCursor))
         self.updatebtn.setObjectName(u"updatebtn")
         self.updatebtn.setStyleSheet(u"background-color: #B10303;\n"
 "color: white;\n"
@@ -376,7 +364,6 @@ class UpdateStaffDialog(QObject):
         QMetaObject.connectSlotsByName(Dialog)
         
         
-        self.populateComboBox()
         self.updatebtn.clicked.connect(self.update_staff)
         self.cancelbtn.clicked.connect(Dialog.close)
         
@@ -392,7 +379,6 @@ class UpdateStaffDialog(QObject):
         self.addresslabel.setText(QCoreApplication.translate("Dialog", u"Address", None))
         self.pininput.setText(QCoreApplication.translate("Dialog", u"PIN", None))
         self.hdlabel.setText(QCoreApplication.translate("Dialog", u"Hire date", None))
-        self.deptlabel.setText(QCoreApplication.translate("Dialog", u"Department", None))
         self.cancelbtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
         self.updatebtn.setText(QCoreApplication.translate("Dialog", u"Update", None))
     # retranslateUi
@@ -404,7 +390,6 @@ class UpdateStaffDialog(QObject):
         phone = self.phoneinput.text()
         email = self.emailinput.text()
         hire_date = self.hdinput.date().toString("yyyy-MM-dd")
-        department_id = self.deptinput.currentData()
         address = self.addressinput.text()
         pin = self.pinlabel.text()
 
@@ -416,11 +401,11 @@ class UpdateStaffDialog(QObject):
             # Insert data into the employees table
             update_query = """
                 UPDATE employees
-                SET first_name = %s, last_name = %s, phone = %s, email = %s, department_id = %s,
+                SET first_name = %s, last_name = %s, phone = %s, email = %s,
                     hire_date = %s, address = %s, emp_pin = %s
                 WHERE employee_id = %s
               """
-            cursor.execute(update_query, (fname, lname, phone, email, department_id, hire_date, address, pin, self.staff_id))
+            cursor.execute(update_query, (fname, lname, phone, email, hire_date, address, pin, self.staff_id))
             conn.commit()
         
 
@@ -438,23 +423,3 @@ class UpdateStaffDialog(QObject):
         except Exception as e:
             QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")
 
-    def populateComboBox(self):
-        try:
-            # Connect to the PostgreSQL database
-            connection = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
-            cursor = connection.cursor()
-
-            # Execute the query to fetch department names and ids
-            cursor.execute("SELECT department_id, name FROM departments")
-            departments = cursor.fetchall()
-
-            # Add department names to the comboBox and store the id as user data
-            for dept_id, dept_name in departments:
-                self.deptinput.addItem(dept_name, dept_id)
-
-            # Close the database connection
-            cursor.close()
-            connection.close()
-        except psycopg2.Error as error:
-            print(f"Error while connecting to database: {error}")
-     
