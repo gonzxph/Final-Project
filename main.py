@@ -133,6 +133,13 @@ class AddScheduleScreen(QMainWindow):
             staff_id = self.ui.tableWidget.item(selected_row, 0).text()  # Assuming ID is in the first column
             first_name = self.ui.tableWidget.item(selected_row, 1).text()
             last_name = self.ui.tableWidget.item(selected_row, 2).text()
+            start_time = self.ui.tableWidget.item(selected_row, 3).text()
+            end_time = self.ui.tableWidget.item(selected_row, 4).text()
+            status = self.ui.tableWidget.item(selected_row, 5).text()
+            
+            if start_time != "None":  # Check if any field is None or empty
+                QMessageBox.warning(self, "Invalid Action", "Staff are already on a schedule.")
+                return
             
             if self.add_schedule_dialog is None:
                 # Create an instance of the add staff dialog
@@ -149,6 +156,9 @@ class AddScheduleScreen(QMainWindow):
             # Show the dialog
             self.add_schedule_dialog.show()
         
+        else:
+            QMessageBox.warning(self, "No Selection", "Please select a staff to add a schedule.")
+        
         
     def open_edit_sched(self):
         selected_row = self.ui.tableWidget.currentRow()
@@ -159,6 +169,10 @@ class AddScheduleScreen(QMainWindow):
             start_time = self.ui.tableWidget.item(selected_row, 3).text()
             end_time = self.ui.tableWidget.item(selected_row, 4).text()
             status = self.ui.tableWidget.item(selected_row, 5).text()
+
+            if start_time == "None":  # Check if any field is None or empty
+                QMessageBox.warning(self, "Invalid Action", "Start, end, and status must have values.")
+                return
 
             if self.update_schedule_dialog is None:
                 self.update_sched_dialog = QDialog()
@@ -174,19 +188,25 @@ class AddScheduleScreen(QMainWindow):
             self.update_ui.comboBox.setCurrentText(status)
 
             self.update_sched_dialog.exec()
+        else:
+            QMessageBox.warning(self, "No Selection", "Please select a schedule to update.")
             
     def open_delete_sched(self):
         selected_row = self.ui.tableWidget.currentRow()
         if selected_row != -1:  # Ensure a row is selected
             sched_id = self.ui.tableWidget.item(selected_row, 6).text()
-            if self.delete_schedule_dialog is None:
-                self.delete_sched_dialog = QDialog()
-                self.delete_ui = DeleteSchedDialog(self.delete_sched_dialog)
-                self.delete_ui.setupUi(self.delete_sched_dialog)
-                self.delete_ui.delete_update.connect(self.ui.load_data)
-            self.delete_ui.sched_id.setText(sched_id)
-            
-            self.delete_sched_dialog.exec()
+            if sched_id != "None":  # Ensure sched_id is not None or empty
+                if self.delete_schedule_dialog is None:
+                    self.delete_sched_dialog = QDialog()
+                    self.delete_ui = DeleteSchedDialog(self.delete_sched_dialog)
+                    self.delete_ui.setupUi(self.delete_sched_dialog)
+                    self.delete_ui.delete_update.connect(self.ui.load_data)
+                self.delete_ui.sched_id.setText(sched_id)
+                self.delete_sched_dialog.exec()
+            else:
+                QMessageBox.warning(self, "Invalid Action", "You cannot delete a schedule with no schedule assigned.")
+        else:
+            QMessageBox.warning(self, "No Selection", "Please select a schedule to delete.")
             
 
 class ScheduleScreen(QMainWindow):
