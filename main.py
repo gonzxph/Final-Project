@@ -72,6 +72,9 @@ class StaffScreen(QMainWindow):
             self.delete_ui.label.setText(f"Are you sure you want to delete {first_name} {last_name}?")
             self.delete_ui.emp_id.setText(staff_id)
             self.delete_staff_dialog.exec_()
+        
+        else:
+            QMessageBox.warning(self, "No Selection", "Please select a staff to delete.")
     
     def open_update_staff_dialog(self):
         # Get the selected staff's information from the table
@@ -106,6 +109,9 @@ class StaffScreen(QMainWindow):
 
             # Show the dialog
             self.update_staff_dialog.exec_()
+        
+        else:
+            QMessageBox.warning(self, "No Selection", "Please select a staff to update.")
             
 class AddScheduleScreen(QMainWindow):
     def __init__(self, stacked_widget, date):

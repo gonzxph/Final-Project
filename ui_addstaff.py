@@ -273,16 +273,6 @@ class AddStaffDialog(QObject):
         self.deptlabel.setFont(font)
         self.deptlabel.setStyleSheet(u"color: #B10303;")
 
-        self.verticalLayout_9.addWidget(self.deptlabel)
-
-        self.deptinput = QComboBox(self.widget_19)
-        self.deptinput.setObjectName(u"deptinput")
-        self.deptinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
-"border: 1px solid  #B10303;\n"
-"border-radius: 5px;\n"
-"padding: 4px;")
-
-        self.verticalLayout_9.addWidget(self.deptinput)
 
 
         self.horizontalLayout_5.addWidget(self.widget_19)
@@ -373,7 +363,6 @@ class AddStaffDialog(QObject):
 
         QMetaObject.connectSlotsByName(Dialog)
         
-        self.populateComboBox()
         
     # setupUi
 
@@ -387,7 +376,6 @@ class AddStaffDialog(QObject):
         self.addresslabel.setText(QCoreApplication.translate("Dialog", u"Address", None))
         self.pinlabel_2.setText(QCoreApplication.translate("Dialog", u"PIN", None))
         self.hdlabel.setText(QCoreApplication.translate("Dialog", u"Hire date", None))
-        self.deptlabel.setText(QCoreApplication.translate("Dialog", u"Department", None))
         self.cancelbtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
         self.addbtn.setText(QCoreApplication.translate("Dialog", u"Add", None))
     # retranslateUi
@@ -401,7 +389,6 @@ class AddStaffDialog(QObject):
         phone = self.phoneinput.text()
         email = self.emailinput.text()
         hire_date = self.dhinput.date().toString("yyyy-MM-dd")
-        department_id = self.deptinput.currentData()
         address = self.addressinput.text()
         pin = self.pininput.text()
 
@@ -412,10 +399,10 @@ class AddStaffDialog(QObject):
             
             # Insert data into the employees table
             insert_query = """
-                INSERT INTO employees (first_name, last_name, phone, email, department_id, hire_date, address, emp_pin)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO employees (first_name, last_name, phone, email, hire_date, address, emp_pin)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
-            cursor.execute(insert_query, (fname, lname, phone, email, department_id, hire_date, address, pin))
+            cursor.execute(insert_query, (fname, lname, phone, email, hire_date, address, pin))
             conn.commit()
 
             cursor.close()
@@ -429,23 +416,3 @@ class AddStaffDialog(QObject):
         except Exception as e:
             QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")
     
-    
-    def populateComboBox(self):
-        try:
-            # Connect to the PostgreSQL database
-            connection = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
-            cursor = connection.cursor()
-
-            # Execute the query to fetch department names and ids
-            cursor.execute("SELECT department_id, name FROM departments")
-            departments = cursor.fetchall()
-
-            # Add department names to the comboBox and store the id as user data
-            for dept_id, dept_name in departments:
-                self.deptinput.addItem(dept_name, dept_id)
-
-            # Close the database connection
-            cursor.close()
-            connection.close()
-        except psycopg2.Error as error:
-            print(f"Error while connecting to database: {error}")
