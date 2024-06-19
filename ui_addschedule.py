@@ -283,7 +283,8 @@ class AddStaffSchedule(QMainWindow):
                 last_name,
                 start_time,
                 end_time,
-                status
+                status,
+                schedule_id
             FROM 
                 employees 
             LEFT JOIN 
@@ -303,8 +304,8 @@ class AddStaffSchedule(QMainWindow):
         """, (self.date,))
         rows = cursor.fetchall()
 
-        self.tableWidget.setColumnCount(6)  # Set the number of columns including the hidden ID column
-        self.tableWidget.setHorizontalHeaderLabels(['ID', 'First Name', 'Last Name', 'Start Time', 'End Time', 'Status'])
+        self.tableWidget.setColumnCount(7)  # Set the number of columns including the hidden ID column
+        self.tableWidget.setHorizontalHeaderLabels(['ID', 'First Name', 'Last Name', 'Start Time', 'End Time', 'Status', 'Schedule ID'])
         self.tableWidget.setRowCount(len(rows))  # Set the number of rows
 
         for row_idx, row_data in enumerate(rows):
@@ -319,6 +320,7 @@ class AddStaffSchedule(QMainWindow):
         header.setSectionResizeMode(QHeaderView.Stretch)
         # Hide the ID column
         self.tableWidget.setColumnHidden(0, True)
+        self.tableWidget.setColumnHidden(6, True)
 
         # Close the connection
         cursor.close()

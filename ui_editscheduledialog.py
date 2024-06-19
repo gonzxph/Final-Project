@@ -59,11 +59,11 @@ class EditSchedDialog(QObject):
 "	background-color: #B10303;\n"
 "	color: black;\n"
 "}")
-        self.deletebtn = QPushButton(self.widget)
-        self.deletebtn.setObjectName(u"deletebtn")
-        self.deletebtn.setGeometry(QRect(80, 580, 150, 40))
-        self.deletebtn.setFont(font)
-        self.deletebtn.setStyleSheet(u"#deletebtn{\n"
+        self.cancelbtn = QPushButton(self.widget)
+        self.cancelbtn.setObjectName(u"cancelbtn")
+        self.cancelbtn.setGeometry(QRect(80, 580, 150, 40))
+        self.cancelbtn.setFont(font)
+        self.cancelbtn.setStyleSheet(u"#cancelbtn{\n"
 "	background-color: rgb(236, 230, 230);\n"
 "	color: #B10303;\n"
 "	border: 1px solid #B10303;\n"
@@ -71,7 +71,7 @@ class EditSchedDialog(QObject):
 "	padding: 7px;\n"
 "}\n"
 "\n"
-"#deletebtn:hover{\n"
+"#cancelbtn:hover{\n"
 "	background-color: #B10303;\n"
 "	color: white;\n"
 "}")
@@ -189,7 +189,7 @@ class EditSchedDialog(QObject):
         QMetaObject.connectSlotsByName(Dialog)
         
         self.updatebtn.clicked.connect(self.update_staff)
-        self.deletebtn.clicked.connect(self.delete_staff)
+        self.cancelbtn.clicked.connect(Dialog.close)
         
         
     # setupUi
@@ -197,7 +197,7 @@ class EditSchedDialog(QObject):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
         self.updatebtn.setText(QCoreApplication.translate("Dialog", u"Update", None))
-        self.deletebtn.setText(QCoreApplication.translate("Dialog", u"Delete", None))
+        self.cancelbtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
         self.fromlabel.setText(QCoreApplication.translate("Dialog", u"From", None))
         self.frominput.setItemText(0, QCoreApplication.translate("Dialog", u"10", None))
         self.frominput.setItemText(1, QCoreApplication.translate("Dialog", u"11", None))
@@ -257,27 +257,27 @@ class EditSchedDialog(QObject):
                 QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")
 
 
-    def delete_staff(self):
-        sched_id = self.sched_id.text()
+#     def delete_staff(self):
+#         sched_id = self.sched_id.text()
 
-        try:
-                conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
-                cursor = conn.cursor()
+#         try:
+#                 conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
+#                 cursor = conn.cursor()
                 
-                delete_query = """
-                DELETE FROM schedules
-                WHERE schedule_id = %s
-                """
-                cursor.execute(delete_query, (sched_id,))
-                conn.commit()
+#                 delete_query = """
+#                 DELETE FROM schedules
+#                 WHERE schedule_id = %s
+#                 """
+#                 cursor.execute(delete_query, (sched_id,))
+#                 conn.commit()
 
-                cursor.close()
-                conn.close()
+#                 cursor.close()
+#                 conn.close()
                 
-                # Show a message box with success
-                QMessageBox.information(None, "Success", "Schedule deleted successfully!")
+#                 # Show a message box with success
+#                 QMessageBox.information(None, "Success", "Schedule deleted successfully!")
                 
-                self.dialog.close()
+#                 self.dialog.close()
 
-        except Exception as e:
-                QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")
+#         except Exception as e:
+#                 QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")

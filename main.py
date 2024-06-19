@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QDialog, QMainWindow, QApplication, QStackedWidget, 
 from PyQt5.QtCore import QDate, Qt
 from ui_addscheduledialog import AddScheduleDialog
 from ui_addstaff import AddStaffDialog
+from ui_deletescheduledialog import DeleteSchedDialog
 from ui_deletestaffdialog import DeleteStaffDialog
 from ui_editscheduledialog import EditSchedDialog
 from ui_login import Ui_Form
@@ -118,9 +119,11 @@ class AddScheduleScreen(QMainWindow):
         self.stacked_widget = stacked_widget
         self.ui.updateschedbtn.clicked.connect(self.open_edit_sched)
         self.ui.addstaffbtn.clicked.connect(self.open_add_schedule)
+        self.ui.deletestaffbtn.clicked.connect(self.open_delete_sched)
         
         self.update_schedule_dialog = None
         self.add_schedule_dialog = None
+        self.delete_schedule_dialog = None
         
         
     def open_add_schedule(self):
@@ -171,6 +174,19 @@ class AddScheduleScreen(QMainWindow):
             self.update_ui.comboBox.setCurrentText(status)
 
             self.update_sched_dialog.exec()
+            
+    def open_delete_sched(self):
+        selected_row = self.ui.tableWidget.currentRow()
+        if selected_row != -1:  # Ensure a row is selected
+            sched_id = self.ui.tableWidget.item(selected_row, 6).text()
+            if self.delete_schedule_dialog is None:
+                self.delete_sched_dialog = QDialog()
+                self.delete_ui = DeleteSchedDialog(self.delete_sched_dialog)
+                self.delete_ui.setupUi(self.delete_sched_dialog)
+                self.delete_ui.delete_update.connect(self.ui.load_data)
+            self.delete_ui.sched_id.setText(sched_id)
+            
+            self.delete_sched_dialog.exec()
             
 
 class ScheduleScreen(QMainWindow):
