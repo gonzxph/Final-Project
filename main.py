@@ -18,7 +18,43 @@ from wesdw import widgets  # Ensure this imports the correct widget class
 conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
 cur = conn.cursor()
 
+class LoginScreen(QDialog):
+    def __init__(self, stacked_widget):
+        super(LoginScreen, self).__init__()
+        self.ui = Ui_login_form()
+        self.ui.setupUi(self)
+        self.stacked_widget = stacked_widget
+        self.ui.btn_login.clicked.connect(self.loginfunction)
 
+    def loginfunction(self):
+        username = self.ui.input_username.text()
+        password = self.ui.input_password.text()
+
+        if len(username) == 0 or len(password) == 0:
+            self.ui.error.setText('Input all fields.')
+            return
+
+        try:
+            cur.execute("""SELECT password FROM users WHERE username = %s""", (username,))
+            result_pass = cur.fetchone()
+        except psycopg2.DatabaseError as e:
+            self.ui.error.setText(f'Database error: {e}')
+            return
+
+        if result_pass and result_pass[0] == password:
+            self.open_staff()
+        else:
+            self.ui.error.setText('Incorrect Username or Password.')
+
+    def open_schedule(self):
+        sched = ScheduleScreen(self.stacked_widget)
+        self.stacked_widget.addWidget(sched)
+        self.stacked_widget.setCurrentWidget(sched)
+
+    def open_staff(self):
+        staff = StaffScreen(self.stacked_widget)
+        self.stacked_widget.addWidget(staff)
+        self.stacked_widget.setCurrentWidget(staff)
 
 class StaffScreen(QMainWindow):
     def __init__(self, stacked_widget):
@@ -205,38 +241,7 @@ class ScheduleScreen(QMainWindow):
         self.stacked_widget.addWidget(addsched)
         self.stacked_widget.setCurrentWidget(addsched)
 
-class LoginScreen(QDialog):
-    def __init__(self, stacked_widget):
-        super(LoginScreen, self).__init__()
-        self.ui = Ui_Form()  # Instantiate the UI class
-        self.ui.setupUi(self)  # Set up the UI
-        self.stacked_widget = stacked_widget
-        self.ui.btnLogin.clicked.connect(self.loginfunction)
 
-    def loginfunction(self):
-        user = self.ui.inputEmail.text()
-        password = self.ui.inputPass.text()
-
-        cur.execute("""SELECT password FROM users WHERE username = %s""", (user,))
-        result_pass = cur.fetchone()
-
-        if len(user) == 0 and len(password) == 0:
-            self.ui.error.setText('Input all field')
-        else:
-            if result_pass and result_pass[0] == password:
-                self.open_staff()
-            else:
-                self.ui.error.setText('Invalid Email or Password')
-
-    def open_schedule(self):
-        sched = ScheduleScreen(self.stacked_widget)  # Pass the stacked widget instance
-        self.stacked_widget.addWidget(sched)
-        self.stacked_widget.setCurrentWidget(sched)
-        
-    def open_staff(self):
-        staff = StaffScreen(self.stacked_widget)
-        self.stacked_widget.addWidget(staff)
-        self.stacked_widget.setCurrentWidget(staff)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
