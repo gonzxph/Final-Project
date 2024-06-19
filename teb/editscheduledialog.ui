@@ -46,7 +46,7 @@
      <property name="styleSheet">
       <string notr="true">background-color: rgb(236, 230, 230);</string>
      </property>
-     <widget class="QPushButton" name="addbtn">
+     <widget class="QPushButton" name="updatebtn">
       <property name="geometry">
        <rect>
         <x>290</x>
@@ -61,17 +61,24 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: #B10303;
-color: white;
-border: 1px solid #B10303;
-border-radius: 4px;
-padding: 7px;</string>
+       <string notr="true">#updatebtn{
+	background-color: #B10303;
+	color: white;
+	border: 1px solid #B10303;
+	border-radius: 4px;
+	padding: 7px;
+}
+
+#updatebtn:hover{
+	background-color: #B10303;
+	color: black;
+}</string>
       </property>
       <property name="text">
-       <string>Add</string>
+       <string>Update</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="cancelbtn">
+     <widget class="QPushButton" name="deletebtn">
       <property name="geometry">
        <rect>
         <x>80</x>
@@ -86,14 +93,21 @@ padding: 7px;</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(236, 230, 230);
-color: #B10303;
-border: 1px solid #B10303;
-border-radius: 4px;
-padding: 7px;</string>
+       <string notr="true">#deletebtn{
+	background-color: rgb(236, 230, 230);
+	color: #B10303;
+	border: 1px solid #B10303;
+	border-radius: 4px;
+	padding: 7px;
+}
+
+#deletebtn:hover{
+	background-color: #B10303;
+	color: white;
+}</string>
       </property>
       <property name="text">
-       <string>Cancel</string>
+       <string>Delete</string>
       </property>
      </widget>
      <widget class="QLabel" name="fromlabel">
@@ -284,7 +298,7 @@ padding: 4px;
        <string notr="true">color: #B10303;</string>
       </property>
       <property name="text">
-       <string>Add Schedule</string>
+       <string>Edit Schedule</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

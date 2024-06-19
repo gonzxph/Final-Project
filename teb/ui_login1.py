@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'loginFzEuNd.ui'
+##
+## Created by: Qt User Interface Compiler version 5.14.1
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
 from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt)
 from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
@@ -5,11 +15,12 @@ from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QRadialGradient)
 from PyQt5.QtWidgets import *
 
-class Ui_Form(object):
+
+class Ui_Form1(object):
     def setupUi(self, Form):
         if Form.objectName():
             Form.setObjectName(u"Form")
-        Form.setFixedSize(1006, 575)  # Set the fixed size of the Form widget
+        Form.resize(1006, 575)
         Form.setMinimumSize(QSize(1006, 575))
         Form.setMaximumSize(QSize(1006, 575))
         self.gridLayout = QGridLayout(Form)
@@ -90,8 +101,11 @@ class Ui_Form(object):
 
         self.gridLayout.addWidget(self.widget_2, 0, 1, 1, 1)
 
+
         self.retranslateUi(Form)
+
         QMetaObject.connectSlotsByName(Form)
+    # setupUi
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
@@ -101,3 +115,13 @@ class Ui_Form(object):
         self.labelPass.setText(QCoreApplication.translate("Form", u"Password", None))
         self.btnLogin.setText(QCoreApplication.translate("Form", u"Login", None))
         self.error.setText("")
+    # retranslateUi
+
+# if __name__ == "__main__":
+#     import sys
+#     app = QApplication(sys.argv)
+#     Form = QWidget()
+#     ui = Ui_Form()
+#     ui.setupUi(Form)
+#     Form.show()
+#     sys.exit(app.exec_())   

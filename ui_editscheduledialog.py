@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'editscheduledialogmLqVQV.ui'
+##
+## Created by: Qt User Interface Compiler version 5.14.1
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
 from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt, pyqtSignal)
 from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
@@ -7,15 +17,18 @@ from PyQt5.QtWidgets import *
 import psycopg2
 
 
-class AddScheduleDialog(QObject):
-    sched_add = pyqtSignal()
-    
-    def __init__(self, dialog):
-        super(AddScheduleDialog, self).__init__()
-        self.dialog = dialog 
-    
-    
+class EditSchedDialog(QObject):
+    sched_update = pyqtSignal()    
+        
+    def __init__(self, dialog, staff_id, date):
+        super(EditSchedDialog, self).__init__()
+        self.dialog = dialog
+        self.staff_id = staff_id
+        self.date = date
+
     def setupUi(self, Dialog):
+        print(8)
+        self.dialog1 = Dialog
         if Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
         Dialog.resize(529, 666)
@@ -28,26 +41,40 @@ class AddScheduleDialog(QObject):
         self.widget = QWidget(Dialog)
         self.widget.setObjectName(u"widget")
         self.widget.setStyleSheet(u"background-color: rgb(236, 230, 230);")
-        self.addbtn = QPushButton(self.widget)
-        self.addbtn.setObjectName(u"addbtn")
-        self.addbtn.setGeometry(QRect(290, 580, 151, 41))
+        self.updatebtn = QPushButton(self.widget)
+        self.updatebtn.setObjectName(u"updatebtn")
+        self.updatebtn.setGeometry(QRect(290, 580, 151, 41))
         font = QFont()
         font.setPointSize(12)
-        self.addbtn.setFont(font)
-        self.addbtn.setStyleSheet(u"background-color: #B10303;\n"
-"color: white;\n"
-"border: 1px solid #B10303;\n"
-"border-radius: 4px;\n"
-"padding: 7px;")
-        self.cancelbtn = QPushButton(self.widget)
-        self.cancelbtn.setObjectName(u"cancelbtn")
-        self.cancelbtn.setGeometry(QRect(80, 580, 150, 40))
-        self.cancelbtn.setFont(font)
-        self.cancelbtn.setStyleSheet(u"background-color: rgb(236, 230, 230);\n"
-"color: #B10303;\n"
-"border: 1px solid #B10303;\n"
-"border-radius: 4px;\n"
-"padding: 7px;")
+        self.updatebtn.setFont(font)
+        self.updatebtn.setStyleSheet(u"#updatebtn{\n"
+"	background-color: #B10303;\n"
+"	color: white;\n"
+"	border: 1px solid #B10303;\n"
+"	border-radius: 4px;\n"
+"	padding: 7px;\n"
+"}\n"
+"\n"
+"#updatebtn:hover{\n"
+"	background-color: #B10303;\n"
+"	color: black;\n"
+"}")
+        self.deletebtn = QPushButton(self.widget)
+        self.deletebtn.setObjectName(u"deletebtn")
+        self.deletebtn.setGeometry(QRect(80, 580, 150, 40))
+        self.deletebtn.setFont(font)
+        self.deletebtn.setStyleSheet(u"#deletebtn{\n"
+"	background-color: rgb(236, 230, 230);\n"
+"	color: #B10303;\n"
+"	border: 1px solid #B10303;\n"
+"	border-radius: 4px;\n"
+"	padding: 7px;\n"
+"}\n"
+"\n"
+"#deletebtn:hover{\n"
+"	background-color: #B10303;\n"
+"	color: white;\n"
+"}")
         self.fromlabel = QLabel(self.widget)
         self.fromlabel.setObjectName(u"fromlabel")
         self.fromlabel.setGeometry(QRect(40, 370, 57, 30))
@@ -149,6 +176,10 @@ class AddScheduleDialog(QObject):
         self.emp_id = QLabel(self.widget)
         self.emp_id.setObjectName(u"emp_id")
         self.emp_id.setGeometry(QRect(220, 130, 55, 16))
+        
+        self.sched_id = QLabel(self.widget)
+        self.sched_id.setObjectName(u"sched_id")
+        self.sched_id.setGeometry(QRect(220, 130, 55, 16))
 
         self.verticalLayout.addWidget(self.widget)
 
@@ -157,15 +188,16 @@ class AddScheduleDialog(QObject):
 
         QMetaObject.connectSlotsByName(Dialog)
         
-        self.addbtn.clicked.connect(self.add_schedule)
-        self.cancelbtn.clicked.connect(Dialog.close)
+        self.updatebtn.clicked.connect(self.update_staff)
+        self.deletebtn.clicked.connect(self.delete_staff)
+        
         
     # setupUi
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.addbtn.setText(QCoreApplication.translate("Dialog", u"Add", None))
-        self.cancelbtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
+        self.updatebtn.setText(QCoreApplication.translate("Dialog", u"Update", None))
+        self.deletebtn.setText(QCoreApplication.translate("Dialog", u"Delete", None))
         self.fromlabel.setText(QCoreApplication.translate("Dialog", u"From", None))
         self.frominput.setItemText(0, QCoreApplication.translate("Dialog", u"10", None))
         self.frominput.setItemText(1, QCoreApplication.translate("Dialog", u"11", None))
@@ -181,44 +213,71 @@ class AddScheduleDialog(QObject):
         self.comboBox.setItemText(1, QCoreApplication.translate("Dialog", u"Reserve", None))
         self.comboBox.setItemText(2, QCoreApplication.translate("Dialog", u"Day off", None))
 
-        self.label.setText(QCoreApplication.translate("Dialog", u"Add Schedule", None))
+        self.label.setText(QCoreApplication.translate("Dialog", u"Edit Schedule", None))
         self.namelabel.setText(QCoreApplication.translate("Dialog", u"Name", None))
         self.tolabel.setText(QCoreApplication.translate("Dialog", u"To", None))
         self.datlabel.setText(QCoreApplication.translate("Dialog", u"Date", None))
         self.emp_id.setText("")
         self.emp_id.hide()
+        # self.shift_date.setText("")
+        self.sched_id.setText("")
+        self.sched_id.hide()
+        
     # retranslateUi
-
-
-    def add_schedule(self):
+    
+    
+    def update_staff(self):
         status = self.comboBox.currentText()
-        shift_date = self.dateinput.text()
         start_time = self.frominput.currentText()
-        end_time = self.toinput.currentText() 
+        end_time = self.toinput.currentText()
         emp_id = self.emp_id.text()
         
+        
         try:
-            conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
-            cursor = conn.cursor()
-            
+                conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
+                cursor = conn.cursor()
+                
+                update_query = """
+                UPDATE schedules
+                SET start_time = %s, end_time = %s, status = %s
+                WHERE employee_id = %s AND shift_date = '"""+self.date+"""'
+                """
+                cursor.execute(update_query, (start_time, end_time, status, emp_id))
+                conn.commit()
 
-            insert_query = """
-                INSERT INTO schedules (employee_id, shift_date, start_time, end_time, status)
-                VALUES (%s, %s, %s, %s, %s)
-            """
-            cursor.execute(insert_query, (emp_id, shift_date, start_time, end_time, status))
-            conn.commit()
-
-            cursor.close()
-            conn.close()
-            
-            
-            # Show a message box with success
-            QMessageBox.information(None, "Success", "Schedule added successfully!")
-            self.sched_add.emit()
-            self.dialog.close()
+                cursor.close()
+                conn.close()
+                
+                # Show a message box with success
+                QMessageBox.information(None, "Success", "Schedule updated successfully!")
+                self.sched_update.emit()
+                self.dialog1.close()
 
         except Exception as e:
-            QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")
-        
-        
+                QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")
+
+
+    def delete_staff(self):
+        sched_id = self.sched_id.text()
+
+        try:
+                conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
+                cursor = conn.cursor()
+                
+                delete_query = """
+                DELETE FROM schedules
+                WHERE schedule_id = %s
+                """
+                cursor.execute(delete_query, (sched_id,))
+                conn.commit()
+
+                cursor.close()
+                conn.close()
+                
+                # Show a message box with success
+                QMessageBox.information(None, "Success", "Schedule deleted successfully!")
+                
+                self.dialog.close()
+
+        except Exception as e:
+                QMessageBox.critical(None, "Database Error", f"Error: {str(e)}")

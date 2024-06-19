@@ -4,6 +4,7 @@ from PyQt5 import QtGui
 import sys
 import psycopg2
 from ui_addscheduledialog import AddScheduleDialog
+from ui_editscheduledialog import EditSchedDialog
 
 first = [1, 2, 0, 1, 1, 2, 0, 1, 1,2,1,1,0]
 last = [7, 5, 4, 9, 12, 5, 0, 9, 12,9,2,12,12]
@@ -77,7 +78,7 @@ class widgets(QFrame):
         gx = 0.06
         for a in range(13):
             guideline2 = QFrame(self.schedFrame)
-            guideline2.setGeometry(int((self.schedScrollArea.width()*gx)+(self.schedScrollArea.width()*.20)), 0, int(self.schedScrollArea.width()*.005), int(self.schedScrollArea.height()*.99))
+            guideline2.setGeometry(int((self.schedFrame.width()*gx)+(self.schedFrame.width()*.20)), 0, int(self.schedFrame.width()*.005), int(self.schedFrame.height()*.99))
             guideline2.setStyleSheet("background-color: black")
             guide.append(guideline2)
             gx += 0.06
@@ -89,11 +90,13 @@ class widgets(QFrame):
                 last_name, 
                 start_time, 
                 end_time, 
-                status 
+                status,
+                schedule_id
+                
             FROM 
                 employees 
             RIGHT JOIN 
-                schedules 
+                schedules
             ON 
                 employees.employee_id = schedules.employee_id 
             WHERE 
@@ -110,7 +113,7 @@ class widgets(QFrame):
 
         employee = cursor.fetchall()
         
-        for eID,fName,lName,sTime,eTime,status in employee:
+        for eID,fName,lName,sTime,eTime,status, schedule_id in employee:
             if status == "Regular":
                 
                 redframe = ClickableFrame(self.schedFrame)
@@ -126,7 +129,7 @@ class widgets(QFrame):
                 yes2.append((eTime + 12)-sTime)
                 redframes.append(redframe)  # Add redframe to the list
                 namez = name[count]
-                redframes[count2].doubleClicked.connect(lambda emp_id=eID, emp_name=fName+" "+lName, date=self.date: self.open_dialog(emp_id,emp_name,date,sTime,eTime,status))
+                redframes[count2].doubleClicked.connect(lambda emp_id=eID, emp_name=fName+" "+lName, date=self.date: self.open_update_dialog(emp_id,emp_name,date,sTime,eTime,status, schedule_id))
                 count2 += 1
                 
             elif status == "Reserve":
@@ -324,18 +327,41 @@ class widgets(QFrame):
         #                         int(self.width() ), int(self.height() ))
         # # self.repaint()
 
-    def open_dialog(self, name):
-        dialog = QDialog(self)
-        dialog.setWindowTitle("Dialog")
-        label = QLabel(f"Name: {name}", dialog)
-        label.move(20, 20)
-        dialog.exec()
+    def open_update_dialog(self, emp_id,emp_name,date,sTime,eTime,status, schedule_id):
+        self.edit_schedule_dialog = QDialog()
+        self.ui = EditSchedDialog(self.edit_schedule_dialog)
+        self.ui.setupUi(self.edit_schedule_dialog)
+        
+        self.ui.emp_id.setText(str(emp_id))
+        self.ui.sched_id.setText(str(schedule_id))
+        self.ui.dateinput.setText(date)
+        self.ui.nameinput.setText(emp_name)
+        # Ensure sTime and eTime are strings
+        sTime = str(sTime)
+        eTime = str(eTime)
+
+        # Set sTime in the combobox
+        sTimeIndex = self.ui.frominput.findText(sTime, Qt.MatchFixedString)
+        if sTimeIndex >= 0:
+            self.ui.frominput.setCurrentIndex(sTimeIndex)
+
+        # Set eTime in the combobox
+        eTimeIndex = self.ui.toinput.findText(eTime, Qt.MatchFixedString)
+        if eTimeIndex >= 0:
+            self.ui.toinput.setCurrentIndex(eTimeIndex)
+            
+        statusIndex = self.ui.comboBox.findText(status, Qt.MatchFixedString)
+        if statusIndex >= 0:
+            self.ui.comboBox.setCurrentIndex(statusIndex)
+        
+        
+        self.edit_schedule_dialog.show()
         
     def open_add_schedule_dialog(self, emp_id, emp_name, date):
         
         # Create an instance of the add staff dialog
         self.add_schedule_dialog = QDialog()
-        self.ui = AddScheduleDialog()
+        self.ui = AddScheduleDialog(self.add_schedule_dialog)
         self.ui.setupUi(self.add_schedule_dialog)
 
         # Connect any signals or slots as needed

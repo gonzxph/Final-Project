@@ -66,7 +66,7 @@
         <widget class="QWidget" name="widget_4" native="true">
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
-           <widget class="QPushButton" name="backbtn">
+           <widget class="QPushButton" name="staffbtn">
             <property name="styleSheet">
              <string notr="true">#staffbtn{
 border: 1px solid white;
@@ -82,7 +82,49 @@ background-color: #B10303;
 }</string>
             </property>
             <property name="text">
-             <string>Back</string>
+             <string>Staff</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="schedbtn">
+            <property name="styleSheet">
+             <string notr="true">#schedbtn{
+border: 1px solid white;
+border-radius: 5px;
+margin: 0 40px;
+padding: 7px;
+color: white;
+}
+
+#schedbtn:hover{
+	background-color: #B10303;
+	color: black;
+}</string>
+            </property>
+            <property name="text">
+             <string>Schedule</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="kioskbtn">
+            <property name="styleSheet">
+             <string notr="true">#kioskbtn{
+border: 1px solid white;
+border-radius: 5px;
+margin: 0 40px;
+padding: 7px;
+color: white;
+}
+
+#kioskbtn:hover{
+	background-color: #B10303;
+	color: black;
+}</string>
+            </property>
+            <property name="text">
+             <string>KIOSK</string>
             </property>
            </widget>
           </item>
@@ -182,7 +224,7 @@ color: white;
            <widget class="QWidget" name="widget_15" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
-              <widget class="QPushButton" name="updateschedbtn">
+              <widget class="QPushButton" name="updatestaffbtn">
                <property name="styleSheet">
                 <string notr="true">#updatestaffbtn{
 border: 1px solid white;
@@ -209,7 +251,7 @@ color: white;
            <widget class="QWidget" name="widget_11" native="true">
             <layout class="QGridLayout" name="gridLayout_4">
              <item row="0" column="0">
-              <widget class="QPushButton" name="addschedbtn">
+              <widget class="QPushButton" name="addstaffbtn">
                <property name="styleSheet">
                 <string notr="true">#addstaffbtn{
 border: 1px solid white;

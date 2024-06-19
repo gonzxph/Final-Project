@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'staff1fSXHqX.ui'
-##
-## Created by: Qt User Interface Compiler version 5.14.1
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
 from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt, QDate)
 from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
@@ -18,6 +8,7 @@ import psycopg2  # Import psycopg2 for PostgreSQL operations
 import datetime
 from PyQt5.uic import loadUi
 from ui_addstaff import AddStaffDialog
+from ui_deletestaffdialog import DeleteStaffDialog
 from ui_updatestaff import UpdateStaffDialog
 
 
@@ -278,8 +269,10 @@ class StaffTab(object):
         MainWindow.setCentralWidget(self.centralwidget)
         
         
-        self.addstaffbtn.clicked.connect(self.open_add_staff_dialog)
-        self.updatestaffbtn.clicked.connect(self.open_update_staff_dialog)
+        # self.addstaffbtn.clicked.connect(self.open_add_staff_dialog)
+        # self.updatestaffbtn.clicked.connect(self.open_update_staff_dialog)
+        # self.deletestaffbtn.clicked.connect(self.open_delete_staff_dialog)
+        
 
         self.retranslateUi(MainWindow)
 
@@ -321,6 +314,8 @@ class StaffTab(object):
                     col_data = col_data.strftime('%Y-%m-%d')  # Convert the date to string
                 self.tableWidget.setItem(row_idx, col_idx, QTableWidgetItem(str(col_data)))
 
+        header = self.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.Stretch)
         # Hide the ID column
         self.tableWidget.setColumnHidden(0, True)
 
@@ -329,61 +324,77 @@ class StaffTab(object):
         conn.close()
 
 
-    def open_add_staff_dialog(self):
-        # Create an instance of the add staff dialog
-        self.add_staff_dialog = QDialog()
-        self.ui = AddStaffDialog()
-        self.ui.setupUi(self.add_staff_dialog)
+    # def open_add_staff_dialog(self):
+    #     # Create an instance of the add staff dialog
+    #     self.add_staff_dialog = QDialog()
+    #     self.ui = AddStaffDialog()
+    #     self.ui.setupUi(self.add_staff_dialog)
 
-        # Connect any signals or slots as needed
 
-        # Show the dialog
-        self.add_staff_dialog.show()
+    #     # Show the dialog
+    #     self.add_staff_dialog.show()
+        
+        
     
-    def refresh_table(self):
-        self.load_data()
+    # def open_delete_staff_dialog(self):
+    #     selected_row = self.tableWidget.currentRow()
+    #     if selected_row != -1:
+    #         staff_id = self.tableWidget.item(selected_row, 0).text()  # Assuming ID is in the first column
+    #         first_name = self.tableWidget.item(selected_row, 1).text()
+    #         last_name = self.tableWidget.item(selected_row, 2).text()
+            
+            
+    #         self.delete_staff_dialog = QDialog()
+    #         self.ui = DeleteStaffDialog(self.delete_staff_dialog)
+    #         self.ui.setupUi(self.delete_staff_dialog)
+    #         self.ui.label.setText(f"Are you sure you want to delete {first_name} {last_name}?")
+            
+    #         self.ui.emp_id.setText(staff_id)
+            
+            
+    #         self.delete_staff_dialog.exec_()
         
-    def open_update_staff_dialog(self):
-        # Get the selected staff's information from the table
-        selected_row = self.tableWidget.currentRow()
-        if selected_row != -1:  # Ensure a row is selected
-            staff_id = self.tableWidget.item(selected_row, 0).text()  # Assuming ID is in the first column
-            first_name = self.tableWidget.item(selected_row, 1).text()
-            last_name = self.tableWidget.item(selected_row, 2).text()
-            address = self.tableWidget.item(selected_row, 3).text()
-            hire_date = self.tableWidget.item(selected_row, 4).text()
-            phone = self.tableWidget.item(selected_row, 5).text()
-            email = self.tableWidget.item(selected_row, 6).text()
-            emp_pin = self.tableWidget.item(selected_row, 7).text()
+    # def open_update_staff_dialog(self):
+    #     # Get the selected staff's information from the table
+    #     selected_row = self.tableWidget.currentRow()
+    #     if selected_row != -1:  # Ensure a row is selected
+    #         staff_id = self.tableWidget.item(selected_row, 0).text()  # Assuming ID is in the first column
+    #         first_name = self.tableWidget.item(selected_row, 1).text()
+    #         last_name = self.tableWidget.item(selected_row, 2).text()
+    #         address = self.tableWidget.item(selected_row, 3).text()
+    #         hire_date = self.tableWidget.item(selected_row, 4).text()
+    #         phone = self.tableWidget.item(selected_row, 5).text()
+    #         email = self.tableWidget.item(selected_row, 6).text()
+    #         emp_pin = self.tableWidget.item(selected_row, 7).text()
 
-            # Create an instance of the update staff dialog
-            self.update_staff_dialog = QDialog()
-            self.ui = UpdateStaffDialog(staff_id, self.update_staff_dialog)
-            self.ui.setupUi(self.update_staff_dialog)
+    #         # Create an instance of the update staff dialog
+    #         self.update_staff_dialog = QDialog()
+    #         self.ui = UpdateStaffDialog(staff_id, self.update_staff_dialog)
+    #         self.ui.setupUi(self.update_staff_dialog)
 
-            # Set the staff's information in the update staff dialog
-            self.ui.fnameinput.setText(first_name)
-            self.ui.lnameinput.setText(last_name)
-            self.ui.addressinput.setText(address)
-            self.ui.phoneinput.setText(phone)
-            self.ui.emailinput.setText(email)
-            self.ui.pinlabel.setText(emp_pin)
-            self.ui.hdinput.setDate(QDate.fromString(hire_date, "yyyy-MM-dd"))
+    #         # Set the staff's information in the update staff dialog
+    #         self.ui.fnameinput.setText(first_name)
+    #         self.ui.lnameinput.setText(last_name)
+    #         self.ui.addressinput.setText(address)
+    #         self.ui.phoneinput.setText(phone)
+    #         self.ui.emailinput.setText(email)
+    #         self.ui.pinlabel.setText(emp_pin)
+    #         self.ui.hdinput.setDate(QDate.fromString(hire_date, "yyyy-MM-dd"))
 
-            # Connect any signals or slots as needed
+    #         # Connect any signals or slots as needed
 
-            # Show the dialog
-            self.update_staff_dialog.exec_()
+    #         # Show the dialog
+    #         self.update_staff_dialog.exec_()
 
         
 
 
-if __name__ == "__main__":
-    import sys
+# if __name__ == "__main__":
+#     import sys
 
-    app = QApplication(sys.argv)
-    MainWindow = QMainWindow()
-    ui = StaffTab()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+#     app = QApplication(sys.argv)
+#     MainWindow = QMainWindow()
+#     ui = StaffTab()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
+#     sys.exit(app.exec_())

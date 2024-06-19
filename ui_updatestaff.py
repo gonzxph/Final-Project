@@ -1,15 +1,5 @@
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'updatestaffQqbUmZ.ui'
-##
-## Created by: Qt User Interface Compiler version 5.14.1
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
 from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt)
+    QRect, QSize, QUrl, Qt, pyqtSignal)
 from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
     QRadialGradient)
@@ -17,7 +7,9 @@ from PyQt5.QtWidgets import *
 import psycopg2
 
 
-class UpdateStaffDialog(object):
+class UpdateStaffDialog(QObject):
+    staff_updated = pyqtSignal()
+    
     def __init__(self, staff_id, dialog):
         super(UpdateStaffDialog, self).__init__()
         self.staff_id = staff_id  
@@ -438,6 +430,8 @@ class UpdateStaffDialog(object):
 
             # Show a message box with success
             QMessageBox.information(None, "Success", "Employee updated successfully!")
+            
+            self.staff_updated.emit()
             
             self.dialog.close()
 

@@ -279,12 +279,12 @@ class MainWindow(QWidget):
         self.back_button.show()
         self.back_button.clicked.connect(self.back_clicked)
 
-        # Find the employee corresponding to the clicked id
-        emp_info = next(emp_info for emp_info in emp if emp_info["id"] == id)
+        # # Find the employee corresponding to the clicked id
+        # emp_info = next(emp_info for emp_info in emp if emp_info["id"] == id)
 
-        # Show employee name in the frame4
-        emp_name_label = QLabel(f"Employee Name: {emp_info['name']}", self.frame4)
-        emp_name_label.move(20, 20)
+        # # Show employee name in the frame4
+        # emp_name_label = QLabel(f"Employee Name: {emp_info['name']}", self.frame4)
+        # emp_name_label.move(20, 20)
 
         # Hide all existing timer labels
         self.hide_timer_labels()
