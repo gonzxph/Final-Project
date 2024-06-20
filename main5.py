@@ -38,15 +38,18 @@ class TimerThread(QThread):
         self.running = False
         self.paused = False
         self.timer = emp_timer  # Initialize the timer with emp_timer value
+        self.timer_limit = 10 * 3600  # 9 hours limit in seconds
 
     def run(self):
-        # print("Timer thread started!")
         while True:
             if self.running and not self.paused:
                 self.timer += 1
-                # print("Timer value:", self.timer)
+                if self.timer >= self.timer_limit:
+                    self.timer = self.timer_limit  # Set timer to the limit
+                    self.running = False  # Stop the timer
                 self.timer_updated.emit(self.timer)
             time.sleep(1)
+
 
     def start_timer(self):
         self.running = True
@@ -245,6 +248,8 @@ class MainWindow(QWidget):
         self.empScrollArea.show()
         self.back_button.hide()
         self.hide_timer_labels()
+        
+    
 
     def start_button_clicked(self):
         # Retrieve the employee id of the clicked frame
@@ -327,6 +332,8 @@ class MainWindow(QWidget):
     def show_timer_label(self, id):
         if id in self.timer_labels:
             self.timer_labels[id].show()
+            
+    
 
     def on_empFrame_clicked(self, id,fname):
         global emp

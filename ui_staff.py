@@ -84,10 +84,10 @@ class StaffTab(object):
 
         self.gridLayout_2.addWidget(self.schedbtn, 1, 0, 1, 1)
 
-        self.kioskbtn = QPushButton(self.widget_4)
-        self.kioskbtn.setCursor(QCursor(Qt.PointingHandCursor))
-        self.kioskbtn.setObjectName(u"kioskbtn")
-        self.kioskbtn.setStyleSheet(u"#kioskbtn{\n"
+        self.reportbtn = QPushButton(self.widget_4)
+        self.reportbtn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.reportbtn.setObjectName(u"reportbtn")
+        self.reportbtn.setStyleSheet(u"#reportbtn{\n"
 "border: 1px solid white;\n"
 "border-radius: 5px;\n"
 "margin: 0 40px;\n"
@@ -95,12 +95,12 @@ class StaffTab(object):
 "color: white;\n"
 "}\n"
 "\n"
-"#kioskbtn:hover{\n"
+"#reportbtn:hover{\n"
 "	background-color: #B10303;\n"
 "	color: black;\n"
 "}")
 
-        self.gridLayout_2.addWidget(self.kioskbtn, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.reportbtn, 2, 0, 1, 1)
 
 
         self.verticalLayout.addWidget(self.widget_4)
@@ -294,7 +294,7 @@ class StaffTab(object):
         self.pushButton.setText("")
         self.staffbtn.setText(QCoreApplication.translate("MainWindow", u"Staff", None))
         self.schedbtn.setText(QCoreApplication.translate("MainWindow", u"Schedule", None))
-        self.kioskbtn.setText(QCoreApplication.translate("MainWindow", u"KIOSK", None))
+        self.reportbtn.setText(QCoreApplication.translate("MainWindow", u"Report", None))
         self.deletestaffbtn.setText(QCoreApplication.translate("MainWindow", u"Delete", None))
         self.updatestaffbtn.setText(QCoreApplication.translate("MainWindow", u"Update", None))
         self.addstaffbtn.setText(QCoreApplication.translate("MainWindow", u"Add", None))

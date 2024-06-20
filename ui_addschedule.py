@@ -283,31 +283,31 @@ class AddStaffSchedule(QMainWindow):
         cursor.execute("""
             SELECT 
                 employees.employee_id, 
-                first_name, 
-                last_name,
-                start_time,
-                end_time,
-                status,
-                schedule_id
+                employees.first_name, 
+                employees.last_name,
+                COALESCE(schedules.start_time, NULL) AS start_time,
+                COALESCE(schedules.end_time, NULL) AS end_time,
+                COALESCE(schedules.status, NULL) AS status,
+                schedules.schedule_id
             FROM 
                 employees 
             LEFT JOIN 
                 schedules 
             ON 
                 employees.employee_id = schedules.employee_id 
-            WHERE 
-                (schedules.shift_date = %s OR schedules.shift_date IS NULL)
+            AND 
+                schedules.shift_date = %s
             ORDER BY 
-                CASE status 
+                CASE COALESCE(schedules.status, 'No Schedule') 
                     WHEN 'Regular' THEN 1
                     WHEN 'Reserve' THEN 2
                     WHEN 'Day off' THEN 3
                     ELSE 4
                 END,
-                start_time
+                schedules.start_time
         """, (self.date,))
         rows = cursor.fetchall()
-
+        print(rows)
         self.tableWidget.setColumnCount(7)  # Set the number of columns including the hidden ID column
         self.tableWidget.setHorizontalHeaderLabels(['ID', 'First Name', 'Last Name', 'Start Time', 'End Time', 'Status', 'Schedule ID'])
         self.tableWidget.setRowCount(len(rows))  # Set the number of rows

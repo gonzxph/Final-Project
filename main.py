@@ -9,11 +9,11 @@ from ui_deletescheduledialog import DeleteSchedDialog
 from ui_deletestaffdialog import DeleteStaffDialog
 from ui_editscheduledialog import EditSchedDialog
 from ui_login import Ui_Form
+from ui_report import ReportWindow
 from ui_staff import StaffTab
 from ui_schedule1 import ScheduleTab
 from ui_addschedule import AddStaffSchedule
 from ui_updatestaff import UpdateStaffDialog
-from wesdw import widgets  # Ensure this imports the correct widget class
 
 # Database connection setup
 conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
@@ -28,6 +28,7 @@ class StaffScreen(QMainWindow):
         self.ui.setupUi(self)
         self.stacked_widget = stacked_widget
         self.ui.schedbtn.clicked.connect(self.open_schedule)
+        self.ui.reportbtn.clicked.connect(self.open_report)
         self.ui.updatestaffbtn.clicked.connect(self.open_update_staff_dialog)
         self.ui.deletestaffbtn.clicked.connect(self.open_delete_staff_dialog)
         self.ui.addstaffbtn.clicked.connect(self.open_add_staff_dialog)
@@ -43,6 +44,11 @@ class StaffScreen(QMainWindow):
         sched = ScheduleScreen(self.stacked_widget)
         self.stacked_widget.addWidget(sched)
         self.stacked_widget.setCurrentWidget(sched)
+        
+    def open_report(self):
+        report = ReportTab(self.stacked_widget)
+        self.stacked_widget.addWidget(report)
+        self.stacked_widget.setCurrentWidget(report)
 
     def open_add_staff_dialog(self):
         if self.add_staff_dialog is None:
@@ -112,7 +118,7 @@ class StaffScreen(QMainWindow):
             QMessageBox.warning(self, "No Selection", "Please select a staff to update.")
 
             
-class AddScheduleScreen(QMainWindow):
+class AddScheduleScreen(QMainWindow): #for calendar window
     def __init__(self, stacked_widget, date):
         
         super(AddScheduleScreen, self).__init__()
@@ -223,6 +229,7 @@ class ScheduleScreen(QMainWindow):
         self.ui.setupUi(self)  # Set up the UI
         self.stacked_widget = stacked_widget
         # Ensure the button is correctly referenced
+        self.ui.reportbtn.clicked.connect(self.open_report)
         if hasattr(self.ui, 'staffbtn'):
             self.ui.staffbtn.clicked.connect(self.open_staff)
         else:
@@ -236,6 +243,11 @@ class ScheduleScreen(QMainWindow):
         staff = StaffScreen(self.stacked_widget)
         self.stacked_widget.addWidget(staff)
         self.stacked_widget.setCurrentWidget(staff)
+    
+    def open_report(self):
+        report = ReportTab(self.stacked_widget)
+        self.stacked_widget.addWidget(report)
+        self.stacked_widget.setCurrentWidget(report)
 
     def open_schedule(self):
         sched = ScheduleScreen(self.stacked_widget)
@@ -247,6 +259,31 @@ class ScheduleScreen(QMainWindow):
         addsched = AddScheduleScreen(self.stacked_widget, date)
         self.stacked_widget.addWidget(addsched)
         self.stacked_widget.setCurrentWidget(addsched)
+        
+        
+class ReportTab(QMainWindow):
+    def __init__(self, stacked_widget):
+        super(ReportTab, self).__init__()
+        self.ui = ReportWindow()
+        self.ui.setupUi(self)  # Set up the UI
+        self.stacked_widget = stacked_widget
+        self.ui.tableWidget.setSortingEnabled(True)
+        # Ensure the button is correctly referenced
+        self.ui.schedbtn.clicked.connect(self.open_schedule)
+        if hasattr(self.ui, 'staffbtn'):
+            self.ui.staffbtn.clicked.connect(self.open_staff)
+        else:
+            print("Error: 'staffbtn' not found in UI setup")
+            
+    def open_staff(self):
+        staff = StaffScreen(self.stacked_widget)
+        self.stacked_widget.addWidget(staff)
+        self.stacked_widget.setCurrentWidget(staff)
+        
+    def open_schedule(self):
+        sched = ScheduleScreen(self.stacked_widget)
+        self.stacked_widget.addWidget(sched)
+        self.stacked_widget.setCurrentWidget(sched)
 
 class LoginScreen(QDialog):
     def __init__(self, stacked_widget):
