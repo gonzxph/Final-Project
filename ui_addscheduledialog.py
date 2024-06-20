@@ -193,24 +193,6 @@ class AddScheduleDialog(QObject):
 
 
     def add_schedule(self):
-        if not self.fnameinput.text():
-            QMessageBox.warning(self, "Validation Error", "Firstname is required.")
-            return
-        if not self.lnameinput.text():
-            QMessageBox.warning(self, "Validation Error", "Lastname is required.")
-            return
-        if not self.phoneinput.text():
-            QMessageBox.warning(self, "Validation Error", "Phone number is required.")
-            return
-        if not self.emailinput.text():
-            QMessageBox.warning(self, "Validation Error", "Email is required.")
-            return
-        if not self.addressinput.text():
-            QMessageBox.warning(self, "Validation Error", "Address is required.")
-            return
-        if not self.pininput.text():
-            QMessageBox.warning(self, "Validation Error", "PIN is required.")
-            return
         
         
         status = self.comboBox.currentText()

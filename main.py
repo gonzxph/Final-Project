@@ -145,7 +145,7 @@ class AddScheduleScreen(QMainWindow):
             status = self.ui.tableWidget.item(selected_row, 5).text()
             
             if start_time != "None":  # Check if any field is None or empty
-                QMessageBox.warning(self, "Invalid Action", "Staff are already on a schedule.")
+                QMessageBox.warning(self, "Invalid Action", "Staff is already on a schedule.")
                 return
             
             if self.add_schedule_dialog is None:
