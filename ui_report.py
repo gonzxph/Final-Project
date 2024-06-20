@@ -227,6 +227,7 @@ class ReportWindow(object):
         self.startdate.setObjectName(u"startdate")
         self.startdate.setDisplayFormat("MM/dd/yyyy")  
         self.startdate.setDate(datetime.date.today())
+        self.startdate.setDate(self.startdate.date().addDays(-7))
         self.startdate.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"
@@ -322,7 +323,7 @@ class ReportWindow(object):
         self.enddate.setObjectName(u"enddate")
         self.enddate.setDisplayFormat("MM/dd/yyyy")
         self.enddate.setDate(datetime.date.today())
-        self.enddate.setDate(self.enddate.date().addDays(+7))
+        
         self.enddate.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"

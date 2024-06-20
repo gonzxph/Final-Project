@@ -9,17 +9,19 @@
 ################################################################################
 
 from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt)
+    QRect, QSize, QUrl, Qt, QRegularExpression)
 from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
-    QRadialGradient)
+    QRadialGradient, QRegularExpressionValidator)
 from PyQt5.QtWidgets import *
+import psycopg2
 
 
 class PIN_Dialog(object):
-    def __init__(self, dialog):
+    def __init__(self, emp_id, dialog):
         super(PIN_Dialog, self).__init__()
         self.dialog = dialog 
+        self.emp_id = emp_id
     
     def setupUi(self, Dialog):
         if Dialog.objectName():
@@ -41,7 +43,11 @@ class PIN_Dialog(object):
         font.setWeight(75)
         self.label.setFont(font)
         self.pininput = QLineEdit(self.widget)
-        self.pininput.setObjectName(u"pininput")
+        regex = QRegularExpression("^[0-9]{4}$")
+        regex_validator = QRegularExpressionValidator(regex, self.pininput)
+        self.pininput.setValidator(regex_validator)
+        self.pininput.setObjectName("pininput")
+        self.pininput.setMaxLength(4)
         self.pininput.setGeometry(QRect(40, 130, 261, 41))
         self.pininput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
@@ -88,6 +94,12 @@ class PIN_Dialog(object):
         self.retranslateUi(Dialog)
 
         QMetaObject.connectSlotsByName(Dialog)
+        
+        self.cancelbtn.clicked.connect(Dialog.reject)
+        self.confirmbtn.clicked.connect(self.check_pin)
+        
+        print(self.emp_id)
+        
     # setupUi
 
     def retranslateUi(self, Dialog):
@@ -96,5 +108,19 @@ class PIN_Dialog(object):
         self.cancelbtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
         self.confirmbtn.setText(QCoreApplication.translate("Dialog", u"Confirm", None))
     # retranslateUi
+    
+    def check_pin(self):
+        pin = self.pininput.text()
+        
+        conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
+        cursor = conn.cursor()
+
+        cursor.execute('SELECT employee_id FROM employees WHERE emp_pin = %s AND employee_id = %s', (pin, self.emp_id))
+        rows = cursor.fetchall()
+        
+        if rows:
+            self.dialog.accept()  # PIN matches, accept the dialog
+        else:
+            self.dialog.reject()  # PIN doesn't match, reject the dialog
     
 

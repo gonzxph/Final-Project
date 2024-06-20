@@ -13,6 +13,7 @@ from ui_report import ReportWindow
 from ui_staff import StaffTab
 from ui_schedule1 import ScheduleTab
 from ui_addschedule import AddStaffSchedule
+from ui_staffdetail import Staff_Details
 from ui_updatestaff import UpdateStaffDialog
 
 # Database connection setup
@@ -32,6 +33,7 @@ class StaffScreen(QMainWindow):
         self.ui.updatestaffbtn.clicked.connect(self.open_update_staff_dialog)
         self.ui.deletestaffbtn.clicked.connect(self.open_delete_staff_dialog)
         self.ui.addstaffbtn.clicked.connect(self.open_add_staff_dialog)
+        self.ui.tableWidget.itemDoubleClicked.connect(self.on_table_double_clicked)
 
         self.ui.tableWidget.setSortingEnabled(True)
         
@@ -39,7 +41,24 @@ class StaffScreen(QMainWindow):
         self.delete_staff_dialog = None
         self.update_staff_dialog = None
         self.add_staff_dialog = None
+        
+    def on_table_double_clicked(self, item):
+        row = item.row()
+        emp_id = self.ui.tableWidget.item(row, 0).text()  # Assuming the employee ID is in the first column
+        fname = self.ui.tableWidget.item(row, 1).text()
+        lname = self.ui.tableWidget.item(row, 2).text()
+        self.open_staff_details_dialog(emp_id,fname,lname)
+        
+    def open_staff_details_dialog(self, emp_id, fname, lname):
+        self.details = QDialog()
+        self.detail_ui = Staff_Details(emp_id, self.details)  # Pass emp_id to Staff_Details constructor
+        self.detail_ui.setupUi(self.details)
+        self.detail_ui.tableWidget.setSortingEnabled(True)
+        
+        self.detail_ui.name.setText(f"{fname} {lname}")
 
+        self.details.exec_()
+        
     def open_schedule(self):
         sched = ScheduleScreen(self.stacked_widget)
         self.stacked_widget.addWidget(sched)
