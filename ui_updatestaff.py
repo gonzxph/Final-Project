@@ -1,8 +1,8 @@
 from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt, pyqtSignal)
+    QRect, QSize, QUrl, Qt, pyqtSignal, QRegExp, QRegularExpression)
 from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
-    QRadialGradient)
+    QRadialGradient, QRegExpValidator, QRegularExpressionValidator)
 from PyQt5.QtWidgets import *
 import psycopg2
 
@@ -87,6 +87,7 @@ class UpdateStaffDialog(QObject):
 
         self.fnameinput = QLineEdit(self.widget_13)
         self.fnameinput.setObjectName(u"fnameinput")
+        self.fnameinput.setMaxLength(35)
         self.fnameinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"
@@ -111,6 +112,7 @@ class UpdateStaffDialog(QObject):
 
         self.lnameinput = QLineEdit(self.widget_14)
         self.lnameinput.setObjectName(u"lnameinput")
+        self.lnameinput.setMaxLength(35)
         self.lnameinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"
@@ -142,7 +144,11 @@ class UpdateStaffDialog(QObject):
         self.verticalLayout_4.addWidget(self.phonelabel)
 
         self.phoneinput = QLineEdit(self.widget_12)
-        self.phoneinput.setObjectName(u"phoneinput")
+        regex = QRegularExpression("^[0-9]{11}$")
+        regex_validator = QRegularExpressionValidator(regex, self.phoneinput)
+        self.phoneinput.setValidator(regex_validator)
+        self.phoneinput.setObjectName("phoneinput")
+        self.phoneinput.setMaxLength(11)
         self.phoneinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"
@@ -166,7 +172,11 @@ class UpdateStaffDialog(QObject):
         self.verticalLayout_5.addWidget(self.emaillabel)
 
         self.emailinput = QLineEdit(self.widget_15)
+        email_regex = QRegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        email_validator = QRegExpValidator(email_regex, self.emailinput)
         self.emailinput.setObjectName(u"emailinput")
+        self.emailinput.setValidator(email_validator)
+        self.emailinput.setMaxLength(35)
         self.emailinput.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"
@@ -223,7 +233,11 @@ class UpdateStaffDialog(QObject):
         self.verticalLayout_6.addWidget(self.pininput)
 
         self.pinlabel = QLineEdit(self.widget_17)
-        self.pinlabel.setObjectName(u"pinlabel")
+        regex = QRegularExpression("^[0-9]{4}$")
+        regex_validator = QRegularExpressionValidator(regex, self.pinlabel)
+        self.pinlabel.setValidator(regex_validator)
+        self.pinlabel.setObjectName("pininput")
+        self.pinlabel.setMaxLength(4)
         self.pinlabel.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border: 1px solid  #B10303;\n"
 "border-radius: 5px;\n"
@@ -384,6 +398,26 @@ class UpdateStaffDialog(QObject):
     # retranslateUi
     
     def update_staff(self):
+        if not self.fnameinput.text():
+            QMessageBox.warning(self, "Validation Error", "Firstname is required.")
+            return
+        if not self.lnameinput.text():
+            QMessageBox.warning(self, "Validation Error", "Lastname is required.")
+            return
+        if not self.phoneinput.hasAcceptableInput():
+            QMessageBox.warning(self, "Validation Error", "Phone number is required.")
+            return
+        if not self.emailinput.hasAcceptableInput():
+            QMessageBox.warning(self, "Validation Error", "Email is not valid.")
+            return
+        if not self.addressinput.text():
+            QMessageBox.warning(self, "Validation Error", "Address is required.")
+            return
+        if not self.pininput.text():
+            QMessageBox.warning(self, "Validation Error", "PIN is required.")
+            return
+        
+        
         # Collect data from the input fields
         fname = self.fnameinput.text()
         lname = self.lnameinput.text()
@@ -414,7 +448,7 @@ class UpdateStaffDialog(QObject):
             conn.close()
 
             # Show a message box with success
-            QMessageBox.information(None, "Success", "Employee updated successfully!")
+            QMessageBox.information(None, "Success", "Satff updated successfully!")
             
             self.staff_updated.emit()
             

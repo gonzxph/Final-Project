@@ -49,13 +49,16 @@
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>image/Logo1.png</normaloff>image/Logo1.png</iconset>
+              <normaloff>../image/Logo1.png</normaloff>../image/Logo1.png</iconset>
             </property>
             <property name="iconSize">
              <size>
               <width>200</width>
               <height>200</height>
              </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -67,6 +70,9 @@
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
            <widget class="QPushButton" name="staffbtn">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="styleSheet">
              <string notr="true">#staffbtn{
 border: 1px solid white;
