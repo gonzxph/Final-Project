@@ -1,13 +1,11 @@
 import sys
 import psycopg2
 
-from PyQt5.QtGui import QResizeEvent, QCursor
+from PyQt5.QtGui import QResizeEvent
 from PyQt5.QtWidgets import QApplication,QFrame, QWidget, QGridLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout, QDialog, QHBoxLayout, QMessageBox,QScrollArea
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
 import time
 from datetime import datetime
-
-from ui_pin import PIN_Dialog
 connection = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
 cursor = connection.cursor()
 current_date = datetime.now().strftime("%Y-%m-%d")
@@ -40,7 +38,7 @@ class TimerThread(QThread):
         self.running = False
         self.paused = False
         self.timer = emp_timer  # Initialize the timer with emp_timer value
-        self.timer_limit = 10 * 3600  # 9 hours limit in seconds
+        self.timer_limit = 9 * 3600  # 9 hours limit in seconds
 
     def run(self):
         while True:
@@ -51,7 +49,6 @@ class TimerThread(QThread):
                     self.running = False  # Stop the timer
                 self.timer_updated.emit(self.timer)
             time.sleep(1)
-
 
     def start_timer(self):
         self.running = True
@@ -73,12 +70,23 @@ class MainWindow(QWidget):
         self.initUI()
         self.timers = {}  # Dictionary to store timers for each employee
         
-        cursor.execute("""SELECT (first_name ||' '|| last_name),seconds,shift.status,s_id
-                        FROM shift 
-                        INNER JOIN schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
-                        INNER JOIN employees ON employees.employee_id = cast(schedules.employee_id as integer)
-						where shift_date = '"""+ self.date+"""' and schedules.status in('Reserve','Regular')
-                        """)
+        cursor.execute("""
+            SELECT 
+                (employees.first_name || ' ' || employees.last_name) AS full_name,
+                shift.seconds,
+                shift.status,
+                shift.s_id
+            FROM 
+                shift 
+            INNER JOIN 
+                schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
+            INNER JOIN 
+                employees ON employees.employee_id = cast(schedules.employee_id as integer)
+            WHERE 
+                shift_date = '"""+ self.date+"""' AND schedules.status IN ('REGULAR', 'RESERVE')
+        """)
+        
+        
         employee = cursor.fetchall()
         print(employee)
         for eName,timerz,status,s_id in employee:
@@ -92,7 +100,20 @@ class MainWindow(QWidget):
                     timer_thread.start_timer()
                 else:
                     timer_thread.start()  # Start the timer thread immediately
-                
+        
+    #     self.check_date_timer = QTimer(self)
+    #     self.check_date_timer.timeout.connect(self.check_date)
+    #     self.check_date_timer.start(1000)  # Check every second
+
+    # def check_date(self):
+
+    #     # Get current date
+    #     current_date2 = datetime.now().strftime("%Y-%m-%d")
+
+    #     # Check if current_date is greater than self.date
+    #     if current_date2 != self.date:
+    #         QMessageBox.warning(self, "Date Expired", "The selected date has expired. Closing the program.")
+    #         sys.exit()            
         
 
 
@@ -110,19 +131,18 @@ class MainWindow(QWidget):
         self.frame1 = QFrame(self)
         self.frame3 = QFrame(self)
         self.back_button = QPushButton("Back",self.frame3)
-        self.back_button.setCursor(QCursor(Qt.PointingHandCursor))
-        self.back_button.setStyleSheet("color:white;background-color:#B10303; border: 2px solid #B10303; border-radius: 10px;")
+        self.back_button.setStyleSheet("background-color:red; border: 2px solid red; border-radius: 10px;")
         self.back_button.hide()
         self.frame4 = QFrame(self)
-        self.frame4.setStyleSheet("background-color:#ECE6E6;")
+        self.frame4.setStyleSheet("background-color:white;")
        
         self.start_button = QPushButton("Start", self.frame4)
         self.pause_button = QPushButton("Clock Out", self.frame4)
         self.resume_button = QPushButton("Clock In", self.frame4)
         # Set the text color to black
-        self.start_button.setStyleSheet("color: white; background-color:#B10303")
-        self.pause_button.setStyleSheet("color: white; background-color:#898989")
-        self.resume_button.setStyleSheet("color: white; background-color:#8BC34A")
+        self.start_button.setStyleSheet("color: black;")
+        self.pause_button.setStyleSheet("color: black;")
+        self.resume_button.setStyleSheet("color: black;")
         self.frame4.hide()
         self.empScrollArea = QScrollArea(self)
         self.frame2 = QFrame()
@@ -130,15 +150,14 @@ class MainWindow(QWidget):
         self.empScrollArea.setWidgetResizable(True)
         self.empScrollArea.setWidget(self.frame2)
 
-        label1 = QLabel("INSURGENT KIOSK",self.frame3)
-        label1.setStyleSheet("color:white; font-size:50px;")
+        label1 = QLabel("INSURGENT",self.frame3)
         frame3_layout = QVBoxLayout(self.frame3)
         frame3_layout.addWidget(label1, alignment=Qt.AlignmentFlag.AlignCenter)
         self.frame3.setLayout(frame3_layout)
-        self.frame3.setStyleSheet("background-color:#282626;")
-        self.frame2.setStyleSheet("background-color:#ECE6E6;")
+        self.frame3.setStyleSheet("background-color:black;")
+        self.frame2.setStyleSheet("background-color:white;")
         # self.frame1.setStyleSheet("background-color:white;")
-        self.frame1.setStyleSheet("background-color:#ECE6E6; border-right: 2px solid black;")
+        self.frame1.setStyleSheet("background-color:white; border-right: 2px solid black;")
         grid_layout.addWidget(self.frame3, 0, 0, 1, 2)  # Span frame3 across two columns
         grid_layout.addWidget(self.frame1, 1, 0)
         grid_layout.addWidget(self.empScrollArea, 1, 1)
@@ -181,7 +200,7 @@ class MainWindow(QWidget):
         self.frame1.setFixedWidth(frame1W)
         self.frame3.setFixedWidth(int(self.width()*1))
         self.frame3.setFixedHeight(int(self.height()*.20))
-        self.back_button.setGeometry(int(self.frame3.width()*.82),int(self.frame3.height()*.10),int(self.frame3.width()*.15),int(self.frame3.height()*.30))
+        self.back_button.setGeometry(int(self.frame3.width()*.80),int(self.frame3.height()*.10),int(self.frame3.width()*.15),int(self.frame3.height()*.30))
         self.empScrollArea.setGeometry(0,0,int(self.width()),int(self.height()))
         total_height = (len(empF)+2) * int(self.empScrollArea.height() * 0.10)
 
@@ -207,29 +226,37 @@ class MainWindow(QWidget):
     def setFrame2(self):
         global emp, empF
         
-        cursor.execute("""SELECT employees.employee_id,(first_name ||' '|| last_name),seconds,shift.status,s_id
-                        FROM shift 
-                        INNER JOIN schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
-                        INNER JOIN employees ON employees.employee_id = cast(schedules.employee_id as integer)
-						where shift_date = '"""+ self.date+"""'
-                        """)
+        cursor.execute("""
+            SELECT 
+                (employees.first_name || ' ' || employees.last_name) AS full_name,
+                shift.seconds,
+                shift.status,
+                shift.s_id
+            FROM 
+                shift 
+            INNER JOIN 
+                schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
+            INNER JOIN 
+                employees ON employees.employee_id = cast(schedules.employee_id as integer)
+            WHERE 
+                shift_date = '"""+ self.date+"""' AND schedules.status IN ('REGULAR', 'RESERVE')
+        """)
         employee = cursor.fetchall()
         
         
-        for emp_id, eName,timerz,status,s_id in employee:
+        for eName,timerz,status,s_id in employee:
             empFrame = QFrame(self.frame2)
-            empFrame.setCursor(QCursor(Qt.PointingHandCursor))
             label = QLabel(eName, empFrame)
             
-            empFrame.setStyleSheet("background-color: #D24242; border: 2px solid black; border-radius: 10px;") 
+            empFrame.setStyleSheet("background-color: red; border: 2px solid black; border-radius: 10px;") 
             label.setStyleSheet(" border: none; color: white;")
             empF.append(empFrame)
             label.move(20,20)
-            empFrame.mousePressEvent = lambda event, emp_id=emp_id, name=s_id,asd = eName: self.on_empFrame_clicked(emp_id,name,asd)
+            empFrame.mousePressEvent = lambda event, name=s_id,asd = eName: self.on_empFrame_clicked(name,asd)
 
         self.timer_labels = {}  # Dictionary to store timer labels for each employee
         # Create timer labels for each employee
-        for emp_id, eName,timerz,status,s_id in employee:
+        for eName,timerz,status,s_id in employee:
             timer_label = QLabel("00:00:00", self.frame4)
             timer_label.setStyleSheet("color: red;")
             timer_label.move(190,50)
@@ -253,8 +280,6 @@ class MainWindow(QWidget):
         self.empScrollArea.show()
         self.back_button.hide()
         self.hide_timer_labels()
-        
-    
 
     def start_button_clicked(self):
         # Retrieve the employee id of the clicked frame
@@ -337,23 +362,9 @@ class MainWindow(QWidget):
     def show_timer_label(self, id):
         if id in self.timer_labels:
             self.timer_labels[id].show()
-    
-    
-    def open_staff_details_dialog(self, emp_id):
-        self.pin = QDialog()
-        self.pin_ui = PIN_Dialog(emp_id, self.pin)
-        self.pin_ui.setupUi(self.pin)
 
-        result = self.pin.exec()
-        return result == QDialog.Accepted
-
-    def on_empFrame_clicked(self, emp_id, id, fname):
+    def on_empFrame_clicked(self, id,fname):
         global emp
-        
-        if not self.open_staff_details_dialog(emp_id):
-            # QMessageBox.warning(self, "Warning", "Incorrect PIN. Please try again.")
-            return
-        
         self.current_emp_id = id
         self.empScrollArea.hide()
         self.frame4.show()
@@ -377,7 +388,15 @@ class MainWindow(QWidget):
         else:
             self.pause_button.hide()
             self.resume_button.hide()
-            
+
+        # # Find the employee corresponding to the clicked id
+        # emp_info = next(emp_info for emp_info in emp if emp_info["id"] == id)
+
+
+        # # Show employee name in the frame4
+        # emp_name_label = QLabel(f"Employee Name: {emp_info['name']}", self.frame4)
+        # emp_name_label.move(20, 20)
+        
         # Hide all existing timer labels
         self.hide_timer_labels()
 
@@ -404,7 +423,6 @@ class MainWindow(QWidget):
             self.resume_button.clicked.connect(lambda: self.resume_button_clicked())
 
             timer_thread.start()
-
 
         
         

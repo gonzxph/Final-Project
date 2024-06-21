@@ -88,9 +88,17 @@ class Staff_Details(object):
 
         for row_idx, row_data in enumerate(rows):
             for col_idx, col_data in enumerate(row_data):
-                if isinstance(col_data, datetime.date):
+                if col_idx == 0 and isinstance(col_data, datetime.date):
                     col_data = col_data.strftime('%Y-%m-%d')  # Convert the date to string
-                self.tableWidget.setItem(row_idx, col_idx, QTableWidgetItem(str(col_data)))
+                    self.tableWidget.setItem(row_idx, col_idx, QTableWidgetItem(str(col_data)))
+                elif col_idx == 1:
+                    self.tableWidget.setItem(row_idx, col_idx, QTableWidgetItem(str(col_data)))
+                    if col_data in ('Reserve', 'Day off'):
+                        self.tableWidget.setItem(row_idx, 2, QTableWidgetItem(''))  # Set Start Time to blank
+                        self.tableWidget.setItem(row_idx, 3, QTableWidgetItem(''))  # Set End Time to blank
+                else:
+                    if row_data[1] not in ('Reserve', 'Day off'):
+                        self.tableWidget.setItem(row_idx, col_idx, QTableWidgetItem(str(col_data)))
 
         header = self.tableWidget.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.Stretch)

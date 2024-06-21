@@ -34,7 +34,7 @@ class StaffScreen(QMainWindow):
         self.ui.deletestaffbtn.clicked.connect(self.open_delete_staff_dialog)
         self.ui.addstaffbtn.clicked.connect(self.open_add_staff_dialog)
         self.ui.tableWidget.itemDoubleClicked.connect(self.on_table_double_clicked)
-
+        
         self.ui.tableWidget.setSortingEnabled(True)
         
         # Initialize the delete, update, and add staff dialogs
@@ -262,7 +262,9 @@ class ScheduleScreen(QMainWindow):
         staff = StaffScreen(self.stacked_widget)
         self.stacked_widget.addWidget(staff)
         self.stacked_widget.setCurrentWidget(staff)
-    
+        # login = LoginScreen(self.stacked_widget)
+        # self.stacked_widget.addWidget(login)
+        # self.stacked_widget.setCurrentWidget(login)
     def open_report(self):
         report = ReportTab(self.stacked_widget)
         self.stacked_widget.addWidget(report)

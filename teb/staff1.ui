@@ -143,7 +143,40 @@ color: white;
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_6" native="true"/>
+        <widget class="QWidget" name="widget_L2" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QWidget" name="widget_L" native="true"/>
+          </item>
+          <item>
+           <widget class="QWidget" name="widget_L1" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QPushButton" name="logoutbtn">
+               <property name="styleSheet">
+                <string notr="true">#logoutbtn{
+border: 1px solid white;
+border-radius: 5px;
+margin: 0 40px;
+padding: 7px;
+color: white;
+}
+
+#logoutbtn:hover{
+	background-color: #B10303;
+	color: black;
+}</string>
+               </property>
+               <property name="text">
+                <string>LOGOUT</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>

@@ -1,7 +1,7 @@
 import sys
 import psycopg2
 
-from PyQt5.QtGui import QResizeEvent, QCursor
+from PyQt5.QtGui import QResizeEvent
 from PyQt5.QtWidgets import QApplication,QFrame, QWidget, QGridLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout, QDialog, QHBoxLayout, QMessageBox,QScrollArea
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
 import time
@@ -67,6 +67,7 @@ class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         # self.date = current_date
+        # self.date = datetime.now().strftime("%Y-%m-%d")
         self.date = datetime.now().strftime("%Y-%m-%d")
         self.timer_limit = 0
 
@@ -77,7 +78,7 @@ class MainWindow(QWidget):
                         FROM shift 
                         INNER JOIN schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
                         INNER JOIN employees ON employees.employee_id = cast(schedules.employee_id as integer)
-						where shift_date = '"""+ self.date+"""' and schedules.status in('Reserve','Regular')
+						where shift_date = '"""+ self.date+"""' and schedules.status in('RESERVE','REGULAR')
                         """)
         employee = cursor.fetchall()
         print(employee)
@@ -110,11 +111,10 @@ class MainWindow(QWidget):
         self.frame1 = QFrame(self)
         self.frame3 = QFrame(self)
         self.back_button = QPushButton("Back",self.frame3)
-        self.back_button.setCursor(QCursor(Qt.PointingHandCursor))
-        self.back_button.setStyleSheet("color:white;background-color:#B10303; border: 2px solid #B10303; border-radius: 10px;")
+        self.back_button.setStyleSheet("background-color:#B10303; border: 2px solid #B10303; border-radius: 10px;")
         self.back_button.hide()
         self.frame4 = QFrame(self)
-        self.frame4.setStyleSheet("background-color:#ECE6E6;")
+        self.frame4.setStyleSheet("background-color:white;")
        
         self.start_button = QPushButton("Start", self.frame4)
         self.pause_button = QPushButton("Clock Out", self.frame4)
@@ -130,15 +130,14 @@ class MainWindow(QWidget):
         self.empScrollArea.setWidgetResizable(True)
         self.empScrollArea.setWidget(self.frame2)
 
-        label1 = QLabel("INSURGENT KIOSK",self.frame3)
-        label1.setStyleSheet("color:white; font-size:50px;")
+        label1 = QLabel("INSURGENT",self.frame3)
         frame3_layout = QVBoxLayout(self.frame3)
         frame3_layout.addWidget(label1, alignment=Qt.AlignmentFlag.AlignCenter)
         self.frame3.setLayout(frame3_layout)
-        self.frame3.setStyleSheet("background-color:#282626;")
-        self.frame2.setStyleSheet("background-color:#ECE6E6;")
+        self.frame3.setStyleSheet("background-color:black;")
+        self.frame2.setStyleSheet("background-color:white;")
         # self.frame1.setStyleSheet("background-color:white;")
-        self.frame1.setStyleSheet("background-color:#ECE6E6; border-right: 2px solid black;")
+        self.frame1.setStyleSheet("background-color:white; border-right: 2px solid black;")
         grid_layout.addWidget(self.frame3, 0, 0, 1, 2)  # Span frame3 across two columns
         grid_layout.addWidget(self.frame1, 1, 0)
         grid_layout.addWidget(self.empScrollArea, 1, 1)
@@ -181,14 +180,14 @@ class MainWindow(QWidget):
         self.frame1.setFixedWidth(frame1W)
         self.frame3.setFixedWidth(int(self.width()*1))
         self.frame3.setFixedHeight(int(self.height()*.20))
-        self.back_button.setGeometry(int(self.frame3.width()*.82),int(self.frame3.height()*.10),int(self.frame3.width()*.15),int(self.frame3.height()*.30))
+        self.back_button.setGeometry(int(self.frame3.width()*.80),int(self.frame3.height()*.10),int(self.frame3.width()*.15),int(self.frame3.height()*.30))
         self.empScrollArea.setGeometry(0,0,int(self.width()),int(self.height()))
         total_height = (len(empF)+2) * int(self.empScrollArea.height() * 0.10)
 
         self.frame2.setMinimumHeight(total_height)
         y = 0.
         cursor.execute("""select count(s_id) from shift inner join schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
-						where shift_date = '"""+ self.date+"""'
+						where shift_date = '"""+ self.date+"""' and schedules.status in('RESERVE','REGULAR')
                         """)
         length = cursor.fetchall()
         for a in range(length[0][0]):
@@ -211,17 +210,16 @@ class MainWindow(QWidget):
                         FROM shift 
                         INNER JOIN schedules ON shift.schedule_id = cast(schedules.schedule_id as integer)
                         INNER JOIN employees ON employees.employee_id = cast(schedules.employee_id as integer)
-						where shift_date = '"""+ self.date+"""'
+						where shift_date = '"""+ self.date+"""' and schedules.status in('RESERVE','REGULAR')
                         """)
         employee = cursor.fetchall()
         
         
         for emp_id, eName,timerz,status,s_id in employee:
             empFrame = QFrame(self.frame2)
-            empFrame.setCursor(QCursor(Qt.PointingHandCursor))
             label = QLabel(eName, empFrame)
             
-            empFrame.setStyleSheet("background-color: #D24242; border: 2px solid black; border-radius: 10px;") 
+            empFrame.setStyleSheet("background-color: red; border: 2px solid black; border-radius: 10px;") 
             label.setStyleSheet(" border: none; color: white;")
             empF.append(empFrame)
             label.move(20,20)
@@ -416,7 +414,13 @@ class MainWindow(QWidget):
         hours = total_seconds // 3600
         minutes = (total_seconds % 3600) // 60
         seconds = total_seconds % 60
-
+        if total_seconds > self.timer_limit:
+            cursor.execute("""UPDATE shift
+                        SET status = 0
+                        WHERE s_id = %s
+                         """, (id,))
+            connection.commit()
+            
         timer_string = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
         self.timer_labels[id].setText(timer_string)
 

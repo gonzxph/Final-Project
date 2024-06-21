@@ -104,7 +104,7 @@ class PIN_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"Enter you PIN", None))
+        self.label.setText(QCoreApplication.translate("Dialog", u"Enter your PIN", None))
         self.cancelbtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
         self.confirmbtn.setText(QCoreApplication.translate("Dialog", u"Confirm", None))
     # retranslateUi
