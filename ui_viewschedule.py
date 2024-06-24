@@ -183,15 +183,15 @@ class View_Schedule(QWidget):
         end_date = end_date_obj.strftime("%Y-%m-%d")
         start_date = start_date_obj.strftime("%Y-%m-%d")
         
-        cursor.execute("""select e.employee_id, e.first_name, e.last_name, s.shift_date, s.start_time, s.end_time from schedules s natural join employees e 
+        cursor.execute("""select e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, s.shift_date, s.start_time, s.end_time from schedules s natural join employees e 
                        WHERE shift_date BETWEEN %s AND %s
 """, (start_date, end_date))
         rows = cursor.fetchall()
         
         
 
-        self.tableWidget.setColumnCount(6)  # Set the number of columns including the hidden ID column
-        self.tableWidget.setHorizontalHeaderLabels(['ID', 'First Name', 'Last Name', 'Shift Date', 'Start Time', 'End Time'])
+        self.tableWidget.setColumnCount(5)  # Set the number of columns including the hidden ID column
+        self.tableWidget.setHorizontalHeaderLabels(['ID', 'Name', 'Shift Date', 'Start Time', 'End Time'])
         self.tableWidget.setRowCount(len(rows))
 
         for row_idx, row_data in enumerate(rows):
@@ -214,20 +214,20 @@ class View_Schedule(QWidget):
         start_date = start_date_obj.strftime("%Y-%m-%d")
         
         if searchinput == "":
-                cursor.execute("""select e.employee_id, e.first_name, e.last_name, s.shift_date, s.start_time, s.end_time from schedules s natural join employees e 
+                cursor.execute("""select e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, s.shift_date, s.start_time, s.end_time from schedules s natural join employees e 
                        WHERE shift_date BETWEEN %s AND %s
                 """, (start_date, end_date))
                 rows = cursor.fetchall()
         else:
-                cursor.execute("""select e.employee_id, e.first_name, e.last_name, s.shift_date, s.start_time, s.end_time from schedules s natural join employees e 
+                cursor.execute("""select e.employee_id, CONCAT(e.first_name, ' ', e.last_name) AS full_name, s.shift_date, s.start_time, s.end_time from schedules s natural join employees e 
                        WHERE (shift_date BETWEEN %s AND %s) AND (lower(first_name) LIKE %s OR lower(last_name) LIKE %s)
                 """, (start_date, end_date, '%'+searchinput+'%', '%'+searchinput+'%'))
                 rows = cursor.fetchall()
         
         
 
-        self.tableWidget.setColumnCount(6)  # Set the number of columns including the hidden ID column
-        self.tableWidget.setHorizontalHeaderLabels(['ID', 'First Name', 'Last Name', 'Shift Date', 'Start Time', 'End Time'])
+        self.tableWidget.setColumnCount(5)  # Set the number of columns including the hidden ID column
+        self.tableWidget.setHorizontalHeaderLabels(['ID', 'Name', 'Shift Date', 'Start Time', 'End Time'])
         self.tableWidget.setRowCount(len(rows))
 
         for row_idx, row_data in enumerate(rows):
