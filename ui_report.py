@@ -513,7 +513,7 @@ class ReportWindow(object):
         
 
         self.tableWidget.setColumnCount(8)  # Set the number of columns including the hidden ID column
-        self.tableWidget.setHorizontalHeaderLabels(['ID', 'First Name', 'Last Name', 'Regular Hours', 'Overtime Hours', 'Regular Salary', 'Overtime Salary', 'Total'])
+        self.tableWidget.setHorizontalHeaderLabels(['ID', 'First Name', 'Last Name', 'Regular Hours', 'Overtime Hours'])
         
 
         

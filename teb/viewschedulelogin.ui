@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1006</width>
+    <height>575</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1006</width>
+    <height>575</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1006</width>
+    <height>575</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QWidget" name="widget" native="true">
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(40, 38, 38);</string>
+     </property>
+     <widget class="QPushButton" name="logo">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>70</y>
+        <width>491</width>
+        <height>401</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>491</width>
+        <height>401</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>421</width>
+        <height>401</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 1px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="logo.qrc">
+        <normaloff>:/image/image/Logo.png</normaloff>:/image/image/Logo.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>550</width>
+        <height>520</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>510</x>
+        <y>0</y>
+        <width>503</width>
+        <height>575</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(199, 194, 194);</string>
+      </property>
+      <widget class="QLabel" name="welcome">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>40</y>
+         <width>191</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>22</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(177, 3, 3);</string>
+       </property>
+       <property name="text">
+        <string>Welcome</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="error">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>110</y>
+         <width>181</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QWidget" name="widget_3" native="true">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>210</y>
+         <width>441</width>
+         <height>341</height>
+        </rect>
+       </property>
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>441</width>
+          <height>341</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QPushButton" name="viewschedbtn">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>180</y>
+         <width>151</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>-1</pointsize>
+        </font>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#viewschedbtn{
+	background-color: rgb(177, 3, 3);
+	color: white;
+	font-size: 20px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+#viewschedbtn:hover{
+	color: black;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>View Schedule</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="loginstaffbtn">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>180</y>
+         <width>151</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#loginstaffbtn{
+	background-color: #ECE6E6;
+	border: 1px solid  #B10303;
+	font-size: 20px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+#loginstaffbtn:hover{
+	background-color: rgb(177, 3, 3);
+	color: white;
+}</string>
+       </property>
+       <property name="text">
+        <string>Staff Login</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="logo.qrc"/>
+ </resources>
+ <connections/>
+</ui>

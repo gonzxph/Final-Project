@@ -8,13 +8,15 @@ from ui_addstaff import AddStaffDialog
 from ui_deletescheduledialog import DeleteSchedDialog
 from ui_deletestaffdialog import DeleteStaffDialog
 from ui_editscheduledialog import EditSchedDialog
-from ui_login import Ui_Form
+# from ui_login import Ui_Form
+from ui_newlogin import New_Login
 from ui_report import ReportWindow
 from ui_staff import StaffTab
 from ui_schedule1 import ScheduleTab
 from ui_addschedule import AddStaffSchedule
 from ui_staffdetail import Staff_Details
 from ui_updatestaff import UpdateStaffDialog
+from ui_viewschedule import View_Schedule
 
 # Database connection setup
 conn = psycopg2.connect(host='localhost', dbname='insurgent_db', user='postgres', password='admin', port='5432')
@@ -305,13 +307,28 @@ class ReportTab(QMainWindow):
         sched = ScheduleScreen(self.stacked_widget)
         self.stacked_widget.addWidget(sched)
         self.stacked_widget.setCurrentWidget(sched)
+        
+class View_StafffSchedule(QDialog):
+    def __init__(self, stacked_widget):
+        super(View_StafffSchedule, self).__init__()
+        self.ui = View_Schedule(stacked_widget)
+        self.ui.setupUi(self)  # Set up the UI
+        self.stacked_widget = stacked_widget
+        self.ui.tableWidget.setSortingEnabled(True)
+        self.ui.loginstaffbtn.clicked.connect(self.open_login)
+        
+    def open_login(self):
+        login = LoginScreen(self.stacked_widget)
+        self.stacked_widget.addWidget(login)
+        self.stacked_widget.setCurrentWidget(login)
 
 class LoginScreen(QDialog):
     def __init__(self, stacked_widget):
         super(LoginScreen, self).__init__()
-        self.ui = Ui_Form()  # Instantiate the UI class
+        self.ui = New_Login()  # Instantiate the UI class
         self.ui.setupUi(self)  # Set up the UI
         self.stacked_widget = stacked_widget
+        self.ui.viewschedbtn.clicked.connect(self.view_schedule)
         self.ui.btnLogin.clicked.connect(self.loginfunction)
 
     def loginfunction(self):
@@ -329,6 +346,12 @@ class LoginScreen(QDialog):
             else:
                 self.ui.error.setText('Invalid Email or Password')
 
+    def view_schedule(self):
+        view_sched = View_StafffSchedule(self.stacked_widget)
+        self.stacked_widget.addWidget(view_sched)
+        self.stacked_widget.setCurrentWidget(view_sched)
+    
+    
     def open_schedule(self):
         sched = ScheduleScreen(self.stacked_widget)  # Pass the stacked widget instance
         self.stacked_widget.addWidget(sched)
