@@ -35,6 +35,7 @@ class StaffScreen(QMainWindow):
         self.ui.updatestaffbtn.clicked.connect(self.open_update_staff_dialog)
         self.ui.deletestaffbtn.clicked.connect(self.open_delete_staff_dialog)
         self.ui.addstaffbtn.clicked.connect(self.open_add_staff_dialog)
+        self.ui.logoutbtn.clicked.connect(self.logout)
         self.ui.tableWidget.itemDoubleClicked.connect(self.on_table_double_clicked)
         
         self.ui.tableWidget.setSortingEnabled(True)
@@ -61,6 +62,12 @@ class StaffScreen(QMainWindow):
 
         self.details.exec_()
         
+    def logout(self):
+        logout = LoginScreen(self.stacked_widget)
+        self.stacked_widget.addWidget(logout)
+        self.stacked_widget.setCurrentWidget(logout)
+        
+    
     def open_schedule(self):
         sched = ScheduleScreen(self.stacked_widget)
         self.stacked_widget.addWidget(sched)
@@ -367,6 +374,6 @@ if __name__ == '__main__':
     widget = QStackedWidget()
     login = LoginScreen(widget)
     widget.addWidget(login)
-    
+    widget.setFixedSize(1006, 575)
     widget.show()
     sys.exit(app.exec_())
