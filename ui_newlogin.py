@@ -38,7 +38,7 @@ class New_Login(object):
         self.logo.setMaximumSize(QSize(421, 401))
         self.logo.setStyleSheet(u"border-radius: 1px;")
         icon = QIcon()
-        icon.addFile(u":/image/image/Logo.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"image/Logo.png", QSize(), QIcon.Normal, QIcon.Off)
         self.logo.setIcon(icon)
         self.logo.setIconSize(QSize(550, 520))
         self.widget_2 = QWidget(self.widget)
